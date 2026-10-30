@@ -19,3 +19,54 @@ body {
 .bg-brand { background-image: linear-gradient(135deg, #a818f5, #2f8bfa); }
 .text-brand { background-image: linear-gradient(90deg, #a818f5, #2f8bfa); -webkit-background-clip: text; background-clip: text; color: transparent; }
 :focus-visible { outline: 2px solid var(--color-azure); outline-offset: 3px; }
+
+/* Buttons: gradient fill + gradient stroke that follows the cursor */
+.btn-fill {
+  color: #fff;
+  background-image: linear-gradient(135deg, #a818f5, #2f8bfa);
+  box-shadow: 0 10px 28px -8px rgba(168, 24, 245, 0.5);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.btn-fill:hover {
+  transform: translateY(-2px);
+  background-image:
+    radial-gradient(110px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.3), transparent 65%),
+    linear-gradient(135deg, #a818f5, #2f8bfa);
+  box-shadow: 0 14px 34px -8px rgba(47, 139, 250, 0.55);
+}
+.btn-outline {
+  position: relative;
+  isolation: isolate;
+  color: var(--color-plum);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 0 0 1.5px rgba(42, 19, 64, 0.12);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.btn-outline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(var(--a, 90deg), #a818f5, #2f8bfa);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.btn-outline:hover {
+  transform: translateY(-2px);
+  background:
+    radial-gradient(90px circle at var(--mx, 50%) var(--my, 50%), rgba(168, 24, 245, 0.1), transparent 70%),
+    rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 0 0 1.5px transparent, 0 12px 30px -10px rgba(168, 24, 245, 0.45), 0 12px 30px -10px rgba(47, 139, 250, 0.35);
+}
+.btn-outline:hover::before { opacity: 1; }
+/* Navbar links: no resting border, gradient stroke appears on hover */
+.btn-nav { background: transparent; box-shadow: none; color: rgba(42, 19, 64, 0.7); }
+.btn-nav:hover { color: var(--color-plum); }
+@media (prefers-reduced-motion: reduce) {
+  .btn-fill:hover, .btn-outline:hover { transform: none; }
+}

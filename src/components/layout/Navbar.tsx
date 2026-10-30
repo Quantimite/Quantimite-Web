@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
+import Button from "@/components/ui/Button";
 
 export const links = [
   { href: "/about", label: "About" },
@@ -18,14 +19,12 @@ export default function Navbar() {
           <Logo />
           <span className="text-xl font-extrabold tracking-tight text-plum">Quantimite</span>
         </Link>
-        <ul className="hidden items-center gap-8 text-sm font-medium text-plum/70 lg:flex">
+        <ul className="hidden items-center gap-1 lg:flex">
           {links.map((l) => (
-            <li key={l.href}><Link href={l.href} className="transition hover:text-violet">{l.label}</Link></li>
+            <li key={l.href}><Button href={l.href} variant="nav">{l.label}</Button></li>
           ))}
         </ul>
-        <Link href="/contact" className="rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet/25 transition hover:shadow-violet/40">
-          Start a project
-        </Link>
+        <Button href="/contact" size="sm">Start a project</Button>
       </nav>
     </header>
   );

@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Button from "@/components/ui/Button";
 import { useEffect, useRef } from "react";
 
 import MascotImage from "./MascotImage";
@@ -27,12 +27,8 @@ export default function Hero() {
             Digital products, software solutions, and growth strategies designed to help ambitious businesses move forward.
           </p>
           <div className="mt-9 flex flex-wrap gap-4">
-            <Link href="/contact" className="rounded-full bg-brand px-7 py-3.5 font-semibold text-white shadow-xl shadow-violet/30 transition hover:-translate-y-0.5 hover:shadow-violet/50">
-              Start a project
-            </Link>
-            <Link href="/portfolio" className="rounded-full border border-plum/15 bg-white/70 px-7 py-3.5 font-semibold text-plum backdrop-blur transition hover:border-violet/50">
-              View our work
-            </Link>
+            <Button href="/contact">Start a project</Button>
+            <Button href="/portfolio" variant="outline">View our work</Button>
           </div>
           <p className="mt-10 text-sm font-semibold text-plum/50">Software · Design · Digital growth</p>
         </div>

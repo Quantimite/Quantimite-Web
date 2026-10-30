@@ -254,4 +254,7 @@ Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
 <sub>Software • Design • Digital Growth</sub>
 
 </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 56dd29f (feat: add gradient buttons, real logo, and nav hover effects)
