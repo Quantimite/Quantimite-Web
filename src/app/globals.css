@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --color-plum: #2a1340;
+  --color-ink: #1b1030;
+  --color-violet: #a818f5;
+  --color-azure: #2f8bfa;
+  --color-mist: #f6f4ff;
+}
+
+body {
+  color: var(--color-ink);
+  background:
+    radial-gradient(1100px 560px at 85% -10%, #e8dcfd 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 25%, #dbeaff 0%, transparent 55%),
+    #fbfaff;
+}
+.bg-brand { background-image: linear-gradient(135deg, #a818f5, #2f8bfa); }
+.text-brand { background-image: linear-gradient(90deg, #a818f5, #2f8bfa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+:focus-visible { outline: 2px solid var(--color-azure); outline-offset: 3px; }
