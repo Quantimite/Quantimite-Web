@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import Logo from "./Logo";
 import Button from "@/components/ui/Button";
+import { useChat } from "@/context/ChatContext";
 
 export const links = [
   { href: "/about", label: "About" },
@@ -12,6 +15,8 @@ export const links = [
 ];
 
 export default function Navbar() {
+  const { openChat } = useChat();
+
   return (
     <header className="sticky top-0 z-50 border-b border-plum/5 bg-white/70 backdrop-blur-xl">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
@@ -28,7 +33,12 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <Button href="/contact" size="sm" className="inline-flex items-center gap-2">
+        <Button
+          type="button"
+          onClick={openChat}
+          size="sm"
+          className="inline-flex items-center gap-2"
+        >
           <svg
             className="w-4 h-4"
             fill="none"
