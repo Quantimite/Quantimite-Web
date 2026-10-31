@@ -1,0 +1,7 @@
+allowBuilds:
+  '@google/genai': set this to true or false
+  protobufjs: set this to true or false
+minimumReleaseAgeExclude:
+  - framer-motion@14.9.0
+  - lucide-react@1.65.0
+  - motion-dom@14.9.0
