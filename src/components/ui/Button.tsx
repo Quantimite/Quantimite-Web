@@ -26,9 +26,15 @@ export default function Button({ variant = "fill", size = "md", className = "", 
       onPointerMove(e as any);
     }
   };
+
   const nav = variant === "nav";
   const pad = nav ? "px-4 py-2 text-sm font-medium" : size === "sm" ? "px-5 py-2.5 text-sm font-semibold" : "px-7 py-3.5 font-semibold";
-  const classes = `${nav ? "btn-outline btn-nav" : `btn-${variant}`} inline-flex items-center justify-center rounded-full ${pad} cursor-pointer ${className}`;
+
+  // Check if className contains 'is-active' to apply active styles automatically
+  const isActive = className.includes("is-active");
+  const activeStyles = nav && isActive ? "bg-plum/10 font-semibold shadow-sm" : "";
+
+  const classes = `${nav ? "btn-outline btn-nav" : `btn-${variant}`} inline-flex items-center justify-center rounded-full ${pad} cursor-pointer ${activeStyles} ${className}`;
 
   if ("href" in props && props.href) {
     return (
