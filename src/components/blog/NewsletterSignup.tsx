@@ -1,7 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, CheckCircle2, AlertCircle, Loader2, Sparkles, ShieldCheck } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  Mail,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  Sparkles,
+  ShieldCheck,
+  Send,
+  Users,
+  Terminal,
+} from "lucide-react";
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState("");
@@ -12,7 +23,7 @@ export default function NewsletterSignup() {
     e.preventDefault();
     if (!email || !email.includes("@")) {
       setStatus("error");
-      setMessage("Please enter a valid email address.");
+      setMessage("Please enter a valid work email address.");
       return;
     }
 
@@ -30,7 +41,7 @@ export default function NewsletterSignup() {
 
       if (res.ok) {
         setStatus("success");
-        setMessage(data.message || "You're subscribed! Welcome to Quantimite Insights.");
+        setMessage(data.message || "You're subscribed! Welcome to Quantimite Intelligence.");
         setEmail("");
       } else {
         setStatus("error");
@@ -44,8 +55,14 @@ export default function NewsletterSignup() {
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-16 sm:py-24">
-      <div className="relative overflow-hidden rounded-3xl border border-plum/10 bg-plum p-8 sm:p-14 lg:p-16 text-white shadow-2xl">
-        {/* Ambient background gradients */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="relative overflow-hidden rounded-3xl border border-plum/10 bg-plum p-8 sm:p-14 lg:p-16 text-white shadow-2xl"
+      >
+        {/* Dynamic Luminous Ambient Fields */}
         <div
           aria-hidden
           className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-violet/30 blur-3xl"
@@ -57,21 +74,22 @@ export default function NewsletterSignup() {
 
         <div className="relative z-10 mx-auto max-w-3xl text-center">
           {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md">
             <Sparkles className="h-3.5 w-3.5 text-azure" />
             <span>Stay Ahead of the Curve</span>
           </div>
 
+          {/* Heading */}
           <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-5xl sm:leading-tight">
-            The engineering & design newsletter{" "}
+            The technical intelligence dispatch{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-300 to-azure-300">
               you&apos;ll actually read
             </span>.
           </h2>
 
           <p className="mt-4 text-base leading-relaxed text-white/75 sm:text-lg">
-            Every fortnight, we share practical architectural blueprints, frontend performance breakthroughs,
-            and honest growth lessons from our client production systems. Zero marketing spam.
+            Every fortnight, we break down production-grade architecture blueprints, Next.js performance
+            optimizations, and real startup scaling lessons. Zero promotional spam.
           </p>
 
           {/* Form */}
@@ -96,7 +114,7 @@ export default function NewsletterSignup() {
               <button
                 type="submit"
                 disabled={status === "loading" || status === "success"}
-                className="btn-fill inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-bold text-white transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                className="btn-fill inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-bold text-white transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed shadow-lg"
               >
                 {status === "loading" ? (
                   <>
@@ -109,34 +127,55 @@ export default function NewsletterSignup() {
                     Subscribed!
                   </>
                 ) : (
-                  "Subscribe Free"
+                  <>
+                    <span>Subscribe Free</span>
+                    <Send className="ml-2 h-3.5 w-3.5" />
+                  </>
                 )}
               </button>
             </div>
 
             {/* Status Messages */}
             {status === "success" && (
-              <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-500/20 border border-emerald-500/40 px-4 py-1.5 text-xs font-semibold text-emerald-300">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-500/20 border border-emerald-500/40 px-4 py-1.5 text-xs font-semibold text-emerald-300"
+              >
                 <CheckCircle2 className="h-4 w-4" />
                 {message}
-              </div>
+              </motion.div>
             )}
 
             {status === "error" && (
-              <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-rose-500/20 border border-rose-500/40 px-4 py-1.5 text-xs font-semibold text-rose-300">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mt-4 inline-flex items-center gap-2 rounded-full bg-rose-500/20 border border-rose-500/40 px-4 py-1.5 text-xs font-semibold text-rose-300"
+              >
                 <AlertCircle className="h-4 w-4" />
                 {message}
-              </div>
+              </motion.div>
             )}
 
-            {/* Privacy reassurance */}
-            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-white/60">
-              <ShieldCheck className="h-3.5 w-3.5 text-white/60" />
-              <span>We respect your privacy. No spam. One-click unsubscribe at any time.</span>
+            {/* Guarantees and Social Proof */}
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-white/60">
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                No Spam &bull; 1-Click Unsubscribe
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Terminal className="h-4 w-4 text-azure" />
+                Fortnightly Technical Blueprints
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Users className="h-4 w-4 text-violet" />
+                Read by Lead Architects &amp; Founders
+              </span>
             </div>
           </form>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
