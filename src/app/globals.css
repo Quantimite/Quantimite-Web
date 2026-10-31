@@ -87,6 +87,8 @@ body {
 
 /* Navbar links: no resting border, gradient stroke appears on hover */
 .btn-nav {
+  position: relative;
+  isolation: isolate;
   background: transparent;
   box-shadow: none;
   color: rgba(42, 19, 64, 0.7);
@@ -96,14 +98,31 @@ body {
   color: var(--color-plum);
 }
 
-/* Active State for Navbar Links/Buttons */
+/* Active State for Navbar Links/Buttons with Gradient Stroke Indicator */
 .btn-nav.is-active,
 .btn-outline.is-active,
 .is-active {
-  background: rgba(168, 24, 245, 0.08) !important;
+  position: relative;
+  isolation: isolate;
   color: var(--color-plum) !important;
   font-weight: 600 !important;
-  box-shadow: inset 0 0 0 1.5px rgba(168, 24, 245, 0.25) !important;
+  background: rgba(168, 24, 245, 0.04) !important;
+}
+
+.btn-nav.is-active::before,
+.btn-outline.is-active::before,
+.is-active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #a818f5, #2f8bfa);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 1 !important;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
