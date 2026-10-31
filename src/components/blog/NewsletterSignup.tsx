@@ -2,17 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Mail,
-  CheckCircle2,
-  AlertCircle,
-  Loader2,
-  Sparkles,
-  ShieldCheck,
-  Send,
-  Users,
-  Terminal,
-} from "lucide-react";
+import { ModernArrowRight, DispatchShieldIcon, BlueprintChipIcon } from "./BlogIcons";
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState("");
@@ -59,7 +49,7 @@ export default function NewsletterSignup() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative overflow-hidden rounded-3xl border border-plum/10 bg-plum p-8 sm:p-14 lg:p-16 text-white shadow-2xl"
       >
         {/* Dynamic Luminous Ambient Fields */}
@@ -75,7 +65,7 @@ export default function NewsletterSignup() {
         <div className="relative z-10 mx-auto max-w-3xl text-center">
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md">
-            <Sparkles className="h-3.5 w-3.5 text-azure" />
+            <span className="h-2 w-2 rounded-full bg-azure animate-pulse" />
             <span>Stay Ahead of the Curve</span>
           </div>
 
@@ -96,7 +86,6 @@ export default function NewsletterSignup() {
           <form onSubmit={handleSubmit} className="mt-8">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
               <div className="relative flex-1 max-w-md">
-                <Mail className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/40" />
                 <input
                   type="email"
                   value={email}
@@ -107,29 +96,23 @@ export default function NewsletterSignup() {
                   placeholder="Enter your work email address..."
                   required
                   disabled={status === "loading" || status === "success"}
-                  className="w-full rounded-full border border-white/20 bg-white/10 py-3.5 pl-12 pr-4 text-sm text-white placeholder:text-white/40 backdrop-blur-md transition-all focus:border-azure focus:bg-white/15 focus:outline-none"
+                  className="w-full rounded-full border border-white/20 bg-white/10 py-3.5 px-6 text-sm text-white placeholder:text-white/40 backdrop-blur-md transition-all focus:border-azure focus:bg-white/15 focus:outline-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={status === "loading" || status === "success"}
-                className="btn-fill inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-bold text-white transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed shadow-lg"
+                className="btn-fill inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-sm font-bold text-white transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed shadow-lg"
               >
                 {status === "loading" ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Subscribing...
-                  </>
+                  <span>Subscribing...</span>
                 ) : status === "success" ? (
-                  <>
-                    <CheckCircle2 className="mr-2 h-4 w-4 text-white" />
-                    Subscribed!
-                  </>
+                  <span>Subscribed!</span>
                 ) : (
                   <>
                     <span>Subscribe Free</span>
-                    <Send className="ml-2 h-3.5 w-3.5" />
+                    <ModernArrowRight size={16} />
                   </>
                 )}
               </button>
@@ -142,8 +125,8 @@ export default function NewsletterSignup() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-500/20 border border-emerald-500/40 px-4 py-1.5 text-xs font-semibold text-emerald-300"
               >
-                <CheckCircle2 className="h-4 w-4" />
-                {message}
+                <BlueprintChipIcon size={14} className="text-emerald-300" />
+                <span>{message}</span>
               </motion.div>
             )}
 
@@ -153,23 +136,23 @@ export default function NewsletterSignup() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-rose-500/20 border border-rose-500/40 px-4 py-1.5 text-xs font-semibold text-rose-300"
               >
-                <AlertCircle className="h-4 w-4" />
-                {message}
+                <span>✕</span>
+                <span>{message}</span>
               </motion.div>
             )}
 
             {/* Guarantees and Social Proof */}
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-white/60">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-white/60">
               <span className="flex items-center gap-1.5">
-                <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                <DispatchShieldIcon size={14} className="text-emerald-400" />
                 No Spam &bull; 1-Click Unsubscribe
               </span>
               <span className="flex items-center gap-1.5">
-                <Terminal className="h-4 w-4 text-azure" />
+                <span className="h-1.5 w-1.5 rounded-full bg-azure" />
                 Fortnightly Technical Blueprints
               </span>
               <span className="flex items-center gap-1.5">
-                <Users className="h-4 w-4 text-violet" />
+                <span className="h-1.5 w-1.5 rounded-full bg-violet" />
                 Read by Lead Architects &amp; Founders
               </span>
             </div>

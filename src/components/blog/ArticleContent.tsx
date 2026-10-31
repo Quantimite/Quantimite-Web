@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import { BlogPost } from "@/types/blog";
-import { Tag, Bookmark } from "lucide-react";
+import { BlueprintChipIcon, ArchitectureIcon } from "./BlogIcons";
 
 interface ArticleContentProps {
   post: BlogPost;
@@ -9,16 +9,16 @@ interface ArticleContentProps {
 export default function ArticleContent({ post }: ArticleContentProps) {
   return (
     <article className="mx-auto max-w-4xl px-6 pb-16">
-      {/* Featured visual banner / header accent */}
-      <div className="relative mb-12 overflow-hidden rounded-3xl border border-plum/10 bg-white/60 p-8 shadow-sm backdrop-blur-md">
+      {/* Featured visual banner / header accent with Liquid Glassmorphism */}
+      <div className="apple-glass-panel relative mb-12 overflow-hidden rounded-3xl p-8">
         <div
-          className={`h-3 w-full rounded-full bg-gradient-to-r ${post.coverGradient} mb-6`}
+          className={`h-2.5 w-full rounded-full bg-gradient-to-r ${post.coverGradient} mb-6`}
         />
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-violet">
-          <Bookmark className="h-4 w-4" />
+        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-violet">
+          <BlueprintChipIcon size={16} className="text-violet" />
           <span>Core Takeaway Overview</span>
         </div>
-        <p className="mt-2 text-base font-medium text-plum/80 leading-relaxed italic">
+        <p className="mt-3 text-base font-medium text-plum/80 leading-relaxed italic">
           &ldquo;{post.excerpt}&rdquo;
         </p>
       </div>
@@ -59,7 +59,7 @@ export default function ArticleContent({ post }: ArticleContentProps) {
             ),
             blockquote: ({ node, ...props }) => (
               <blockquote
-                className="my-8 rounded-2xl border-l-4 border-violet bg-violet/5 p-6 text-lg font-medium italic text-plum sm:text-xl shadow-xs"
+                className="apple-glass-panel my-8 rounded-2xl border-l-4 border-l-violet p-6 text-lg font-medium italic text-plum sm:text-xl shadow-xs"
                 {...props}
               />
             ),
@@ -78,7 +78,9 @@ export default function ArticleContent({ post }: ArticleContentProps) {
               return (
                 <div className="my-6 overflow-hidden rounded-2xl border border-plum/15 bg-plum text-white shadow-xl">
                   <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5 text-xs text-white/60">
-                    <span className="font-mono">Code Snippet</span>
+                    <span className="font-mono flex items-center gap-1.5">
+                      <ArchitectureIcon size={14} /> Source Blueprint
+                    </span>
                     <span className="flex items-center gap-1.5">
                       <span className="h-2 w-2 rounded-full bg-rose-400" />
                       <span className="h-2 w-2 rounded-full bg-amber-400" />
@@ -104,14 +106,13 @@ export default function ArticleContent({ post }: ArticleContentProps) {
 
       {/* Article Tag Footer */}
       <div className="mt-12 flex flex-wrap items-center gap-2 border-t border-plum/10 pt-6">
-        <span className="flex items-center gap-1.5 text-xs font-semibold text-plum/60 mr-1">
-          <Tag className="h-3.5 w-3.5" />
-          Tags:
+        <span className="font-semibold text-xs text-plum/60 mr-1">
+          Filed under tags:
         </span>
         {post.tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-lg bg-plum/5 px-3 py-1 text-xs font-medium text-plum/75 hover:bg-plum/10 transition-colors"
+            className="apple-glass-pill rounded-lg px-3 py-1 text-xs font-semibold"
           >
             #{tag}
           </span>

@@ -4,15 +4,10 @@ import { motion, type Variants } from "framer-motion";
 import Button from "@/components/ui/Button";
 import BlogAnimatedBackground from "./BlogAnimatedBackground";
 import {
-  Sparkles,
-  ArrowDown,
-  Terminal,
-  Palette,
-  TrendingUp,
-  Rocket,
-  Compass,
-  CheckCircle2,
-} from "lucide-react";
+  RadarCompassIcon,
+  ModernArrowRight,
+  BlueprintChipIcon,
+} from "./BlogIcons";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -36,32 +31,32 @@ const itemVariants: Variants = {
 
 const bentoFeatures = [
   {
-    icon: Terminal,
+    image: "/assets/blog/software-architecture.jpg",
     title: "Software & Architecture",
     description: "Next.js 15, React 19, distributed microservices, and edge computing patterns.",
     tag: "Core Systems",
-    color: "from-violet-500/10 to-indigo-500/10 border-violet-500/20 text-violet",
+    badgeColor: "bg-violet/10 text-violet border-violet/20",
   },
   {
-    icon: Palette,
+    image: "/assets/blog/design-craft.jpg",
     title: "Liquid Interface Craft",
     description: "Physics-based micro-interactions, Apple-grade glassmorphism, and design systems.",
     tag: "UI / UX Design",
-    color: "from-fuchsia-500/10 to-pink-500/10 border-fuchsia-500/20 text-fuchsia-600",
+    badgeColor: "bg-fuchsia-500/10 text-fuchsia-600 border-fuchsia-500/20",
   },
   {
-    icon: TrendingUp,
+    image: "/assets/blog/technical-growth.jpg",
     title: "Technical Growth & SEO",
     description: "Sub-100ms Core Web Vitals, JSON-LD knowledge graphs, and programmatic search.",
     tag: "Engineering SEO",
-    color: "from-blue-500/10 to-azure/10 border-blue-500/20 text-azure",
+    badgeColor: "bg-blue-500/10 text-azure border-blue-500/20",
   },
   {
-    icon: Rocket,
+    image: "/assets/blog/startup-velocity.jpg",
     title: "Startup Velocity",
     description: "Battle-tested 90-day iteration models to navigate from MVP to product-market fit.",
     tag: "Venture Playbooks",
-    color: "from-amber-500/10 to-orange-500/10 border-amber-500/20 text-amber-600",
+    badgeColor: "bg-amber-500/10 text-amber-600 border-amber-500/20",
   },
 ];
 
@@ -87,7 +82,7 @@ export default function BlogHero() {
         >
           {/* Eyebrow Pill */}
           <motion.div variants={itemVariants} className="inline-flex items-center gap-2">
-            <span className="inline-flex items-center gap-2 rounded-full border border-plum/10 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-plum shadow-xs backdrop-blur-md">
+            <span className="apple-glass-pill inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider">
               <span className="h-2 w-2 rounded-full bg-brand animate-pulse" />
               <span>Quantimite Intelligence // Editorial &amp; Insights</span>
             </span>
@@ -119,11 +114,11 @@ export default function BlogHero() {
             <button
               type="button"
               onClick={() => scrollTo("articles")}
-              className="btn-fill inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-bold text-white shadow-lg cursor-pointer"
+              className="btn-fill inline-flex items-center gap-2.5 rounded-full px-8 py-3.5 text-sm font-bold text-white shadow-lg cursor-pointer"
             >
-              <Compass className="h-4 w-4" />
+              <RadarCompassIcon size={18} />
               <span>Explore All Insights</span>
-              <ArrowDown className="h-4 w-4 animate-bounce" />
+              <ModernArrowRight size={16} />
             </button>
 
             <button
@@ -131,7 +126,7 @@ export default function BlogHero() {
               onClick={() => scrollTo("newsletter")}
               className="btn-outline inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-plum cursor-pointer"
             >
-              <Sparkles className="h-4 w-4 text-violet" />
+              <span className="h-2 w-2 rounded-full bg-violet" />
               <span>Join Fortnightly Dispatch</span>
             </button>
           </motion.div>
@@ -139,50 +134,54 @@ export default function BlogHero() {
           {/* Editorial Pipeline Status Indicator */}
           <motion.div
             variants={itemVariants}
-            className="mt-8 flex items-center justify-center gap-6 text-xs font-semibold text-plum/60"
+            className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-plum/60"
           >
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+              <BlueprintChipIcon size={16} className="text-emerald-500" />
               Peer-Reviewed Architecture
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+              <span className="h-1.5 w-1.5 rounded-full bg-azure" />
               Zero Marketing Fluff
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
-              Open Source Code Patterns
+              <span className="h-1.5 w-1.5 rounded-full bg-violet" />
+              Production Code Blueprints
             </span>
           </motion.div>
         </motion.div>
 
-        {/* Modern Bento Category Pillar Grid */}
+        {/* 3D Glassmorphic Bento Category Pillar Grid */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
           className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
-          {bentoFeatures.map((item, index) => {
-            const Icon = item.icon;
-            return (
+          {bentoFeatures.map((item, index) => (
+            <div
+              key={index}
+              className="apple-glass-panel group relative flex flex-col justify-between overflow-hidden rounded-3xl p-6 transition-all duration-300 hover:-translate-y-2 hover:border-violet/40 hover:shadow-2xl"
+            >
+              {/* Luminous background glow on hover */}
               <div
-                key={index}
-                className="group relative overflow-hidden rounded-3xl border border-plum/10 bg-white/70 p-6 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-violet/30 hover:bg-white/90 hover:shadow-xl"
-              >
-                {/* Luminous hover accent */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full bg-gradient-to-br from-violet/10 to-azure/10 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
-                />
+                aria-hidden
+                className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full bg-gradient-to-br from-violet/15 to-azure/15 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
+              />
 
+              <div>
+                {/* Header with 3D Rendered Icon & Category Tag */}
                 <div className="flex items-center justify-between">
-                  <div
-                    className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl border bg-gradient-to-br ${item.color} shadow-xs`}
-                  >
-                    <Icon className="h-5 w-5" />
+                  <div className="relative h-14 w-14 overflow-hidden rounded-2xl border border-white/60 bg-white/50 p-1 shadow-md transition-transform duration-300 group-hover:scale-105">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="h-full w-full object-cover rounded-xl"
+                    />
                   </div>
-                  <span className="rounded-full bg-plum/5 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-plum/60">
+                  <span
+                    className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${item.badgeColor}`}
+                  >
                     {item.tag}
                   </span>
                 </div>
@@ -194,8 +193,13 @@ export default function BlogHero() {
                   {item.description}
                 </p>
               </div>
-            );
-          })}
+
+              <div className="mt-6 flex items-center gap-1.5 text-xs font-bold text-plum/50 group-hover:text-violet transition-colors">
+                <span>View Track</span>
+                <ModernArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              </div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>

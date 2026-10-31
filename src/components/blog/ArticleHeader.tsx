@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { BlogPost } from "@/types/blog";
-import { Clock, Calendar, ChevronRight, Share2, Check, Link as LinkIcon } from "lucide-react";
+import { ChronoDialIcon } from "./BlogIcons";
 
 interface ArticleHeaderProps {
   post: BlogPost;
@@ -33,19 +33,19 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
     <header className="relative pt-10 pb-8 sm:pt-14 sm:pb-12">
       {/* Breadcrumbs */}
       <nav aria-label="Breadcrumb" className="mx-auto max-w-4xl px-6">
-        <ol className="flex flex-wrap items-center gap-1.5 text-xs font-semibold text-plum/60">
+        <ol className="flex flex-wrap items-center gap-2 text-xs font-semibold text-plum/60">
           <li>
             <Link href="/" className="hover:text-plum transition-colors">
               Home
             </Link>
           </li>
-          <ChevronRight className="h-3 w-3" />
+          <span className="text-plum/30">/</span>
           <li>
             <Link href="/blog" className="hover:text-plum transition-colors">
               Insights
             </Link>
           </li>
-          <ChevronRight className="h-3 w-3" />
+          <span className="text-plum/30">/</span>
           <li>
             <span className="text-violet font-bold">{post.category}</span>
           </li>
@@ -59,11 +59,11 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
             {post.category}
           </span>
           <span className="flex items-center gap-1.5 font-medium text-plum/60">
-            <Clock className="h-3.5 w-3.5" />
+            <ChronoDialIcon size={14} className="text-violet" />
             {post.readTime}
           </span>
-          <span className="flex items-center gap-1.5 font-medium text-plum/60">
-            <Calendar className="h-3.5 w-3.5" />
+          <span className="text-plum/40">&bull;</span>
+          <span className="font-medium text-plum/60">
             {post.publishedAt}
           </span>
         </div>
@@ -85,7 +85,7 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
             <img
               src={post.author.avatar}
               alt={post.author.name}
-              className="h-13 w-13 rounded-full object-cover ring-2 ring-violet/20"
+              className="h-12 w-12 rounded-2xl object-cover ring-2 ring-violet/20"
             />
             <div>
               <div className="flex items-center gap-2">
@@ -102,8 +102,8 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
 
           {/* Social Share Buttons */}
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-plum/60 mr-1 flex items-center gap-1">
-              <Share2 className="h-3.5 w-3.5" /> Share:
+            <span className="text-xs font-bold text-plum/60 mr-1">
+              Share:
             </span>
 
             {/* Twitter / X */}
@@ -111,7 +111,7 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
               href={twitterShareUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-plum/10 bg-white/80 text-plum/70 hover:border-violet/40 hover:text-violet hover:bg-white shadow-xs transition-all"
+              className="apple-glass-pill inline-flex h-9 w-9 items-center justify-center rounded-full text-plum/70 hover:text-violet transition-all"
               title="Share on X / Twitter"
             >
               <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
@@ -124,7 +124,7 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
               href={linkedinShareUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-plum/10 bg-white/80 text-plum/70 hover:border-azure/40 hover:text-azure hover:bg-white shadow-xs transition-all"
+              className="apple-glass-pill inline-flex h-9 w-9 items-center justify-center rounded-full text-plum/70 hover:text-azure transition-all"
               title="Share on LinkedIn"
             >
               <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
@@ -136,19 +136,13 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
             <button
               type="button"
               onClick={copyToClipboard}
-              className="relative inline-flex h-9 items-center gap-1.5 rounded-full border border-plum/10 bg-white/80 px-3.5 text-xs font-semibold text-plum/70 hover:border-violet/40 hover:text-violet hover:bg-white shadow-xs transition-all cursor-pointer"
+              className="apple-glass-pill inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-xs font-semibold text-plum/70 cursor-pointer"
               title="Copy article link"
             >
               {copied ? (
-                <>
-                  <Check className="h-3.5 w-3.5 text-emerald-600" />
-                  <span className="text-emerald-600">Copied!</span>
-                </>
+                <span className="text-emerald-600 font-bold">Copied!</span>
               ) : (
-                <>
-                  <LinkIcon className="h-3.5 w-3.5" />
-                  <span>Copy Link</span>
-                </>
+                <span>Copy Link</span>
               )}
             </button>
           </div>

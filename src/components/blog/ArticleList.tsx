@@ -2,22 +2,15 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { BlogPost, BlogCategory } from "@/types/blog";
 import { BLOG_CATEGORIES } from "@/lib/blog-data";
 import {
-  Search,
-  Clock,
-  ArrowRight,
-  Tag,
-  X,
-  Filter,
-  Sparkles,
-  Layers,
-  Terminal,
-  TrendingUp,
-  Rocket,
-} from "lucide-react";
+  ModernArrowRight,
+  ChronoDialIcon,
+  OpticalSearchIcon,
+  BlueprintChipIcon,
+} from "./BlogIcons";
 
 interface ArticleListProps {
   posts: BlogPost[];
@@ -28,15 +21,15 @@ const PLACEHOLDER_BOXES: {
   category: BlogCategory;
   gradient: string;
   tag: string;
-  icon: any;
+  image: string;
   title: string;
   excerpt: string;
 }[] = [
   {
     category: "Software",
     gradient: "from-violet-600 via-indigo-600 to-azure-500",
-    tag: "Next.js",
-    icon: Terminal,
+    tag: "Next.js 15",
+    image: "/assets/blog/software-architecture.jpg",
     title: "Enterprise Architecture & Edge Invalidation",
     excerpt:
       "Deep dive into high-throughput Next.js 15, React 19 server actions, and zero-cold-start edge microservices.",
@@ -45,7 +38,7 @@ const PLACEHOLDER_BOXES: {
     category: "Design",
     gradient: "from-fuchsia-600 via-violet-600 to-pink-600",
     tag: "LiquidGlass",
-    icon: Layers,
+    image: "/assets/blog/design-craft.jpg",
     title: "Tactile Liquid Interfaces & Spatial Design",
     excerpt:
       "Balancing GPU performance, light diffusion, and depth ergonomics in modern web design systems.",
@@ -54,7 +47,7 @@ const PLACEHOLDER_BOXES: {
     category: "Marketing",
     gradient: "from-blue-600 via-azure to-teal-500",
     tag: "CoreWebVitals",
-    icon: TrendingUp,
+    image: "/assets/blog/technical-growth.jpg",
     title: "Engineering-First Technical SEO & SaaS Growth",
     excerpt:
       "Structured JSON-LD schema graphs, programmatic sitemaps, and sub-100ms metrics that outperform content farms.",
@@ -63,7 +56,7 @@ const PLACEHOLDER_BOXES: {
     category: "Startup Tips",
     gradient: "from-amber-500 via-orange-600 to-rose-600",
     tag: "Velocity",
-    icon: Rocket,
+    image: "/assets/blog/startup-velocity.jpg",
     title: "The 90-Day Engineering Velocity Playbook",
     excerpt:
       "How high-growth technical founders avoid early architecture debt while shipping rapid customer feedback cycles.",
@@ -138,7 +131,7 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
   return (
     <section className="mx-auto max-w-7xl px-6 py-12">
       {/* Modern Filter & Search Hub */}
-      <div className="relative rounded-3xl border border-plum/10 bg-white/70 p-6 shadow-sm backdrop-blur-md sm:p-8">
+      <div className="apple-glass-panel relative rounded-3xl p-6 sm:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           {/* Category Tabs */}
           <div className="flex flex-wrap items-center gap-2">
@@ -148,7 +141,7 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
               className={`relative rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                 selectedCategory === "All"
                   ? "bg-brand text-white shadow-md shadow-violet/25"
-                  : "bg-white/90 text-plum/70 border border-plum/10 hover:border-plum/20 hover:text-plum"
+                  : "apple-glass-pill"
               }`}
             >
               All Topics {hasRealPosts && `(${categoryCounts["All"]})`}
@@ -161,7 +154,7 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
                 className={`relative rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                   selectedCategory === cat
                     ? "bg-brand text-white shadow-md shadow-violet/25"
-                    : "bg-white/90 text-plum/70 border border-plum/10 hover:border-plum/20 hover:text-plum"
+                    : "apple-glass-pill"
                 }`}
               >
                 {cat} {hasRealPosts && `(${categoryCounts[cat] || 0})`}
@@ -171,7 +164,9 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
 
           {/* Search Box */}
           <div className="relative w-full lg:w-80">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-plum/40" />
+            <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-plum/40">
+              <OpticalSearchIcon size={16} />
+            </div>
             <input
               type="text"
               value={searchQuery}
@@ -183,9 +178,9 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-plum/40 hover:text-plum cursor-pointer"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-plum/40 hover:text-plum cursor-pointer"
               >
-                <X className="h-4 w-4" />
+                ✕
               </button>
             )}
           </div>
@@ -194,8 +189,8 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
         {/* Tags Row */}
         {allTags.length > 0 && (
           <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-plum/10 pt-4 text-xs">
-            <span className="flex items-center gap-1 font-semibold text-plum/60">
-              <Tag className="h-3 w-3" /> Filter by tag:
+            <span className="font-semibold text-plum/60 mr-1">
+              Filter by tag:
             </span>
             {allTags.map((tag) => {
               const isSelected = selectedTag === tag;
@@ -219,9 +214,8 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
               <button
                 type="button"
                 onClick={clearAllFilters}
-                className="ml-auto inline-flex items-center gap-1 font-semibold text-violet hover:underline cursor-pointer"
+                className="ml-auto font-semibold text-violet hover:underline cursor-pointer"
               >
-                <X className="h-3.5 w-3.5" />
                 Reset filters
               </button>
             )}
@@ -242,7 +236,7 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
           ) : (
             <span className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              Editorial Grid &bull; Filtered by{" "}
+              Editorial Grid &bull; Track:{" "}
               <strong className="text-plum">{selectedCategory}</strong>
             </span>
           )}
@@ -266,9 +260,8 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
               <motion.article
                 key={post.slug}
                 variants={cardVariants}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-plum/10 bg-white/80 p-7 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-violet/30 hover:shadow-2xl"
+                className="apple-glass-panel group relative flex flex-col justify-between overflow-hidden rounded-3xl p-7 transition-all duration-300 hover:-translate-y-2 hover:border-violet/40 hover:shadow-2xl"
               >
-                {/* Luminous hover glow */}
                 <div
                   aria-hidden
                   className="pointer-events-none absolute -right-16 -top-16 h-36 w-36 rounded-full bg-gradient-to-br from-violet/10 via-azure/10 to-transparent opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
@@ -283,8 +276,8 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
                     <span className="rounded-full bg-violet/10 px-3 py-1 font-bold text-violet">
                       {post.category}
                     </span>
-                    <span className="flex items-center gap-1 font-medium text-plum/60">
-                      <Clock className="h-3 w-3" />
+                    <span className="flex items-center gap-1.5 font-medium text-plum/60">
+                      <ChronoDialIcon size={13} className="text-violet" />
                       {post.readTime}
                     </span>
                   </div>
@@ -329,7 +322,7 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
                     className="inline-flex items-center gap-1 text-xs font-bold text-violet transition-colors hover:text-azure"
                   >
                     <span>Read</span>
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                    <ModernArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
               </motion.article>
@@ -351,7 +344,7 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
           </div>
         )
       ) : (
-        /* Empty Mock Data Mode: Modern Bento Placeholder Cards */
+        /* Empty Mock Data Mode: Modern 3D Visual Bento Placeholder Cards */
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -359,78 +352,79 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
           viewport={{ once: true }}
           className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {filteredPlaceholders.map((box, idx) => {
-            const Icon = box.icon;
-            return (
-              <motion.div
-                key={idx}
-                variants={cardVariants}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-plum/10 bg-white/80 p-7 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-violet/30 hover:bg-white hover:shadow-2xl"
-              >
-                {/* Luminous accent */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -right-16 -top-16 h-36 w-36 rounded-full bg-gradient-to-br from-violet/10 to-azure/10 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
-                />
+          {filteredPlaceholders.map((box, idx) => (
+            <motion.div
+              key={idx}
+              variants={cardVariants}
+              className="apple-glass-panel group relative flex flex-col justify-between overflow-hidden rounded-3xl p-7 transition-all duration-300 hover:-translate-y-2 hover:border-violet/40 hover:shadow-2xl"
+            >
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-16 -top-16 h-36 w-36 rounded-full bg-gradient-to-br from-violet/10 to-azure/10 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
+              />
 
-                <div>
-                  {/* Visual Accent Top Bar */}
-                  <div
-                    className={`h-2.5 w-full rounded-full bg-gradient-to-r ${box.gradient} mb-5`}
-                  />
+              <div>
+                {/* 3D Visual Thumbnail Frame */}
+                <div className="mb-5 flex items-center justify-between">
+                  <div className="relative h-16 w-16 overflow-hidden rounded-2xl border border-plum/10 bg-white/80 p-1 shadow-sm transition-transform duration-300 group-hover:scale-105">
+                    <img
+                      src={box.image}
+                      alt={box.title}
+                      className="h-full w-full object-cover rounded-xl"
+                    />
+                  </div>
 
-                  {/* Category & Status */}
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="rounded-full bg-violet/10 px-3 py-1 font-bold text-violet">
+                  <div className="text-right">
+                    <span className="rounded-full bg-violet/10 px-3 py-1 text-xs font-bold text-violet">
                       {box.category}
                     </span>
-                    <span className="flex items-center gap-1 font-medium text-plum/50 font-mono text-[11px]">
-                      <Clock className="h-3 w-3" />
+                    <p className="mt-1 text-[10px] font-mono text-plum/50 flex items-center justify-end gap-1">
+                      <ChronoDialIcon size={11} className="text-plum/40" />
                       In Review
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="mt-4 text-xl font-bold tracking-tight text-plum group-hover:text-violet transition-colors">
-                    {box.title}
-                  </h3>
-
-                  {/* Excerpt */}
-                  <p className="mt-3 text-sm leading-relaxed text-plum/70">
-                    {box.excerpt}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="mt-5 flex flex-wrap gap-1.5">
-                    <span className="rounded-md bg-plum/5 px-2.5 py-1 text-[11px] font-semibold text-plum/60">
-                      #{box.tag}
-                    </span>
-                    <span className="rounded-md bg-plum/5 px-2.5 py-1 text-[11px] font-semibold text-plum/60">
-                      #Blueprint
-                    </span>
+                    </p>
                   </div>
                 </div>
 
-                {/* Footer slot */}
-                <div className="mt-8 flex items-center justify-between border-t border-plum/10 pt-4">
-                  <div className="flex items-center gap-2.5">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-plum/10 text-xs font-bold text-plum">
-                      Q
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-plum">Quantimite Core</p>
-                      <p className="text-[10px] text-plum/50">Engineering Guild</p>
-                    </div>
-                  </div>
+                {/* Title */}
+                <h3 className="mt-2 text-xl font-bold tracking-tight text-plum group-hover:text-violet transition-colors">
+                  {box.title}
+                </h3>
 
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 text-[10px] font-bold text-emerald-600">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    Slot Ready
+                {/* Excerpt */}
+                <p className="mt-3 text-sm leading-relaxed text-plum/70">
+                  {box.excerpt}
+                </p>
+
+                {/* Tags */}
+                <div className="mt-5 flex flex-wrap gap-1.5">
+                  <span className="rounded-md bg-plum/5 px-2.5 py-1 text-[11px] font-semibold text-plum/60">
+                    #{box.tag}
+                  </span>
+                  <span className="rounded-md bg-plum/5 px-2.5 py-1 text-[11px] font-semibold text-plum/60">
+                    #Blueprint
                   </span>
                 </div>
-              </motion.div>
-            );
-          })}
+              </div>
+
+              {/* Footer slot */}
+              <div className="mt-8 flex items-center justify-between border-t border-plum/10 pt-4">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-plum/10 text-xs font-bold text-plum">
+                    Q
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-plum">Quantimite Core</p>
+                    <p className="text-[10px] text-plum/50">Engineering Guild</p>
+                  </div>
+                </div>
+
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 text-[10px] font-bold text-emerald-600">
+                  <BlueprintChipIcon size={12} className="text-emerald-500" />
+                  Slot Ready
+                </span>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       )}
     </section>
