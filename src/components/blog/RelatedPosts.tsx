@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BlogPost } from "@/types/blog";
-import { Clock, ArrowRight } from "lucide-react";
+import { ChronoDialIcon, ModernArrowRight } from "./BlogIcons";
 
 interface RelatedPostsProps {
   posts: BlogPost[];
@@ -10,7 +10,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
   if (!posts || posts.length === 0) return null;
 
   return (
-    <section className="border-t border-plum/10 bg-plum/2 py-16">
+    <section className="border-t border-plum/10 py-16">
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -26,6 +26,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-violet hover:text-azure transition-colors"
           >
             <span>View all insights</span>
+            <ModernArrowRight size={15} />
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -34,7 +35,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
           {posts.map((post) => (
             <article
               key={post.slug}
-              className="group flex flex-col justify-between rounded-3xl border border-plum/10 bg-white/80 p-6 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-violet/30 hover:shadow-lg"
+              className="apple-glass-panel group relative flex flex-col justify-between rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet/40 hover:shadow-xl"
             >
               <div>
                 {/* Visual artwork preview */}
@@ -45,17 +46,21 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
                       alt={post.title}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"
+                    />
                   </div>
                 ) : (
                   <div className={`h-2 w-full rounded-full bg-gradient-to-r ${post.coverGradient} mb-4`} />
                 )}
 
                 <div className="flex items-center justify-between text-xs">
-                  <span className="rounded-full bg-violet/10 px-2.5 py-0.5 font-semibold text-violet">
+                  <span className="rounded-full bg-violet/10 px-2.5 py-0.5 font-bold text-violet">
                     {post.category}
                   </span>
-                  <span className="flex items-center gap-1 font-medium text-plum/60">
-                    <Clock className="h-3 w-3" />
+                  <span className="flex items-center gap-1.5 font-medium text-plum/60">
+                    <ChronoDialIcon size={12} className="text-violet" />
                     {post.readTime}
                   </span>
                 </div>
@@ -78,6 +83,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
                   className="inline-flex items-center gap-1 text-xs font-bold text-violet transition-colors hover:text-azure"
                 >
                   <span>Read</span>
+                  <ModernArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>

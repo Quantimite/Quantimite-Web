@@ -22,6 +22,7 @@ export interface BlogPost {
   featured?: boolean;
   coverGradient: string;
   coverImage?: string;
+  difficulty?: "Foundational" | "Advanced" | "Staff+";
   figureCaption?: string;
   audioDuration?: string;
   folio?: string;
