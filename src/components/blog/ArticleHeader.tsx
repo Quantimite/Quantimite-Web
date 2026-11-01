@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { BlogPost } from "@/types/blog";
-import { Clock, Calendar, ChevronRight, Share2, Check, Link as LinkIcon, Sparkles } from "lucide-react";
+import { Clock } from "lucide-react";
 
 interface ArticleHeaderProps {
   post: BlogPost;
@@ -66,7 +66,7 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
             {post.category}
           </span>
           <span className="flex items-center gap-1.5 font-medium text-plum/60">
-            <ChronoDialIcon size={14} className="text-violet" />
+            <Clock className="h-3.5 w-3.5 text-violet" />
             {post.readTime}
           </span>
           <span className="text-plum/40">&bull;</span>
