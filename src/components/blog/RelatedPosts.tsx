@@ -27,6 +27,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
           >
             <span>View all insights</span>
             <ModernArrowRight size={15} />
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 
@@ -83,6 +84,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
                 >
                   <span>Read</span>
                   <ModernArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
             </article>

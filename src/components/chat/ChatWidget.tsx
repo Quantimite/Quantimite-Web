@@ -62,7 +62,7 @@ export default function ChatWidget() {
             transition={{ type: "spring", stiffness: 360, damping: 28 }}
             onClick={openChat}
             aria-label="Open Chat"
-            className="btn-fill fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-semibold cursor-pointer"
+            className="btn-fill fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-semibold cursor-pointer shadow-lg shadow-violet/20"
           >
             <MessageCircle className="h-4 w-4" />
             <span>Let&apos;s Chat</span>
@@ -70,7 +70,7 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* Compact Apple-Style Liquid Glass Chat Box */}
+      {/* Compact Apple-Style Translucent Glass Chat Box */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -78,19 +78,19 @@ export default function ChatWidget() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.94, y: 18 }}
             transition={{ type: "spring", stiffness: 380, damping: 30 }}
-            className="apple-glass-panel fixed bottom-5 right-5 z-50 flex flex-col w-[calc(100vw-2.5rem)] max-w-[345px] h-[465px] rounded-[26px] overflow-hidden"
+            className="fixed bottom-5 right-5 z-50 flex flex-col w-[calc(100vw-2.5rem)] max-w-[345px] h-[465px] rounded-[26px] overflow-hidden bg-white/85 backdrop-blur-2xl border border-white/85 shadow-2xl shadow-violet/25 text-plum"
           >
             {/* 1. TOP HEADER BAR */}
-            <div className="apple-glass-header flex items-center justify-between px-4 py-3 shrink-0">
+            <div className="flex items-center justify-between px-4 py-3 shrink-0 border-b border-plum/10 bg-white/50 backdrop-blur-md">
               <div className="flex items-center gap-2.5">
-                <div className="apple-glass-pill flex h-7 w-7 items-center justify-center rounded-full p-1">
+                <div className="flex h-7 w-7 items-center justify-center rounded-full p-1 bg-plum/5 border border-plum/10">
                   <Logo className="h-4 w-auto" />
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs font-extrabold tracking-tight text-plum">
                     Quantimite
                   </span>
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 </div>
               </div>
 
@@ -98,14 +98,14 @@ export default function ChatWidget() {
                 <button
                   onClick={clearMessages}
                   title="Reset chat"
-                  className="apple-glass-pill flex h-7 w-7 items-center justify-center rounded-full text-plum/65 hover:text-plum cursor-pointer"
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-plum/5 text-plum/70 hover:text-plum hover:bg-plum/10 transition-colors cursor-pointer"
                 >
                   <RotateCcw className="h-3 w-3" />
                 </button>
                 <button
                   onClick={closeChat}
                   title="Close"
-                  className="apple-glass-pill flex h-7 w-7 items-center justify-center rounded-full text-plum/65 hover:text-plum cursor-pointer"
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-plum/5 text-plum/70 hover:text-plum hover:bg-plum/10 transition-colors cursor-pointer"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -113,7 +113,7 @@ export default function ChatWidget() {
             </div>
 
             {/* 2. STRUCTURED CONTENT STREAM */}
-            <div className="flex-1 overflow-y-auto px-3.5 py-3 space-y-3 text-xs">
+            <div className="flex-1 overflow-y-auto px-3.5 py-3 space-y-3 text-xs scrollbar-thin">
               {/* Structured Intro Card & 2x2 Action Grid (shown before user sends first message) */}
               {messages.length === 1 && (
                 <motion.div
@@ -121,11 +121,11 @@ export default function ChatWidget() {
                   animate={{ opacity: 1, y: 0 }}
                   className="space-y-2.5"
                 >
-                  <div className="apple-glass-bubble rounded-[20px] p-3.5 text-center space-y-1">
+                  <div className="rounded-[20px] p-3.5 text-center space-y-1 bg-white/70 border border-white/90 shadow-sm backdrop-blur-md">
                     <p className="text-xs font-extrabold text-plum">
                       We engineer your next move.
                     </p>
-                    <p className="text-[11px] text-plum/65 leading-relaxed">
+                    <p className="text-[11px] text-plum/70 leading-relaxed">
                       Ask anything about our software, design, or growth services.
                     </p>
                   </div>
@@ -138,9 +138,9 @@ export default function ChatWidget() {
                           key={item.label}
                           onClick={() => sendMessage(item.prompt)}
                           disabled={isLoading}
-                          className="apple-glass-pill flex items-center gap-2 rounded-[14px] px-2.5 py-2 text-left cursor-pointer group"
+                          className="flex items-center gap-2 rounded-[14px] px-2.5 py-2 text-left cursor-pointer group bg-white/70 border border-white/90 hover:bg-white hover:border-violet/30 transition-all shadow-xs"
                         >
-                          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-brand text-white">
+                          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-brand text-white shadow-xs">
                             <Icon className="h-3 w-3" />
                           </div>
                           <span className="text-[11px] font-semibold text-plum leading-tight">
@@ -167,11 +167,10 @@ export default function ChatWidget() {
                       className={`flex flex-col ${isUser ? "items-end" : "items-start"}`}
                     >
                       <div
-                        className={`rounded-[18px] leading-relaxed ${
-                          isUser
-                            ? "apple-glass-bubble-user max-w-[82%] px-3.5 py-2 rounded-br-[6px]"
-                            : "apple-glass-bubble w-[94%] p-3 text-ink rounded-bl-[6px]"
-                        }`}
+                        className={`rounded-[18px] leading-relaxed ${isUser
+                            ? "bg-gradient-to-r from-violet to-azure text-white max-w-[82%] px-3.5 py-2 rounded-br-[6px] shadow-sm"
+                            : "w-[94%] p-3 text-ink bg-white/80 border border-white shadow-sm rounded-bl-[6px]"
+                          }`}
                       >
                         {isUser ? (
                           <p className="whitespace-pre-wrap font-medium">{msg.content}</p>
@@ -180,7 +179,7 @@ export default function ChatWidget() {
                             <ReactMarkdown
                               components={{
                                 p: ({ children }) => (
-                                  <p className="text-[11.5px] leading-relaxed text-ink/90 last:mb-0">
+                                  <p className="text-[11.5px] leading-relaxed text-ink/95 last:mb-0">
                                     {children}
                                   </p>
                                 ),
@@ -201,7 +200,7 @@ export default function ChatWidget() {
                                   <ol className="space-y-1.5 my-1.5">{children}</ol>
                                 ),
                                 li: ({ children }) => (
-                                  <li className="rounded-xl bg-white/65 border border-white/90 px-2.5 py-1.5 text-[11px] leading-snug text-ink/85 shadow-[0_1px_4px_rgba(42,19,64,0.04)] flex items-start gap-2">
+                                  <li className="rounded-xl bg-white/90 border border-plum/10 px-2.5 py-1.5 text-[11px] leading-snug text-ink/90 shadow-xs flex items-start gap-2">
                                     <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-brand shrink-0" />
                                     <div className="flex-1">{children}</div>
                                   </li>
@@ -233,7 +232,7 @@ export default function ChatWidget() {
 
               {/* Loading Indicator */}
               {isLoading && (
-                <div className="apple-glass-bubble inline-flex items-center gap-1.5 rounded-[16px] rounded-bl-[6px] px-3.5 py-2.5">
+                <div className="inline-flex items-center gap-1.5 rounded-[16px] rounded-bl-[6px] px-3.5 py-2.5 bg-white/80 border border-white shadow-xs">
                   <span className="h-1.5 w-1.5 rounded-full bg-violet animate-bounce [animation-delay:-0.3s]" />
                   <span className="h-1.5 w-1.5 rounded-full bg-azure animate-bounce [animation-delay:-0.15s]" />
                   <span className="h-1.5 w-1.5 rounded-full bg-plum/45 animate-bounce" />
@@ -244,10 +243,10 @@ export default function ChatWidget() {
             </div>
 
             {/* 3. BOTTOM FLOATING CAPSULE INPUT */}
-            <div className="p-3 pt-1.5 shrink-0">
+            <div className="p-3 pt-1.5 shrink-0 bg-white/40 backdrop-blur-md border-t border-plum/10">
               <form
                 onSubmit={handleSubmit}
-                className="apple-glass-input flex items-center gap-1.5 rounded-full pl-3.5 pr-1.5 py-1"
+                className="flex items-center gap-1.5 rounded-full pl-3.5 pr-1.5 py-1 bg-white/90 border border-plum/15 shadow-inner"
               >
                 <input
                   ref={inputRef}
@@ -262,7 +261,7 @@ export default function ChatWidget() {
                   type="submit"
                   disabled={!inputText.trim() || isLoading}
                   aria-label="Send"
-                  className="btn-fill flex h-7 w-7 shrink-0 items-center justify-center rounded-full disabled:opacity-35 cursor-pointer"
+                  className="btn-fill flex h-7 w-7 shrink-0 items-center justify-center rounded-full disabled:opacity-35 cursor-pointer shadow-xs"
                 >
                   <Send className="h-3 w-3" />
                 </button>

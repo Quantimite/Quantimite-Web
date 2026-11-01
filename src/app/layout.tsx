@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={manrope.variable}>
-      <body className="font-sans antialiased">
+    <html lang="en" className={manrope.variable} suppressHydrationWarning>
+      <body className="font-sans antialiased" suppressHydrationWarning>
         <ChatProvider>
           {children}
           <ChatWidget />

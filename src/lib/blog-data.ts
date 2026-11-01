@@ -11,6 +11,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "architecture-of-permanence",
     title: "The Architecture of Permanence: Engineering Distributed Systems for the Next Decade",
+    folio: "FOLIO NO. 01 • THE COVER ESSAY",
     excerpt:
       "In an era of disposable frameworks and ephemeral microservices, how do we engineer architectures that endure? A deep monograph into deterministic state machines, fault boundaries, and zero-compromise resilience.",
     category: "Software",
@@ -30,6 +31,14 @@ export const BLOG_POSTS: BlogPost[] = [
     featured: true,
     coverGradient: "from-purple-900/60 via-slate-900 to-black",
     coverImage: "/assets/images/insights/hero-monolith.jpg",
+    audioDuration: "16 min audio",
+    featured: true,
+    coverGradient: "from-purple-900/60 via-slate-900 to-black",
+    coverImage: "/assets/images/insights/hero-monolith.jpg",
+    figureCaption:
+      "FIG. 01 — Optical refraction through precision titanium and borosilicate prism on limestone slab. Photography by Quantimite Art Direction Studio.",
+    editorNote:
+      "Selected as Lead Monograph for Volume 04. Includes architectural blueprints, formal verification patterns, and latency degradation profiles under partition.",
     seo: {
       metaTitle: "The Architecture of Permanence | Quantimite Insights",
       metaDescription:
@@ -90,6 +99,7 @@ By enforcing immutability and continuous causal verification, systems designed u
   {
     slug: "analog-intuition-neural-cores",
     title: "Analog Intuition, Autonomous Cores: Bridging Symbolic Reasoning with Neural Architectures",
+    folio: "FOLIO NO. 02 • COMPUTATIONAL CRAFT",
     excerpt:
       "Why the next paradigm of enterprise intelligence mirrors tactile analog synthesis more than brute-force parametric scaling. Exploring neuro-symbolic execution and localized reasoning.",
     category: "Software",
@@ -107,6 +117,13 @@ By enforcing immutability and continuous causal verification, systems designed u
     readTime: "9 min read",
     coverGradient: "from-violet-950 via-slate-900 to-black",
     coverImage: "/assets/images/insights/tactile-crystal.jpg",
+    audioDuration: "12 min audio",
+    coverGradient: "from-violet-950 via-slate-900 to-black",
+    coverImage: "/assets/images/insights/tactile-crystal.jpg",
+    figureCaption:
+      "FIG. 02 — High-vacuum triode valve and unrefined quartz on slate. Analog signal purity meets computational intelligence.",
+    editorNote:
+      "A technical investigation into deterministic constraint satisfaction solvers layered on top of transformer attention heads.",
     seo: {
       metaTitle: "Analog Intuition, Autonomous Cores | Quantimite Insights",
       metaDescription:
@@ -130,6 +147,7 @@ When an AI agent proposes a multi-step financial transaction or code refactoring
   {
     slug: "tactile-interfaces-frictionless-world",
     title: "Tactile Interfaces in a Frictionless World: The Ergonomics of Modern Spatial & Liquid UI",
+    folio: "FOLIO NO. 03 • PRODUCT CRAFT",
     excerpt:
       "As digital interfaces become completely ambient, physical affordances, kinetic damping, and tangible weight have never been more vital. How physical materiality shapes digital ergonomics.",
     category: "Design",
@@ -138,6 +156,9 @@ When an AI agent proposes a multi-step financial transaction or code refactoring
     author: {
       name: "Cheshani Dananjana",
       role: "Head of Product Experience",
+    author: {
+      name: "Cheshani Dananjana",
+      role: "Head of Product Experience & Art Direction",
       avatar: "/assets/brand/logo-icon.png",
       bio: "Crafting boundary-pushing sensory design systems and tactile interfaces at Quantimite.",
       linkedin: "https://linkedin.com/company/quantimite",
@@ -147,6 +168,13 @@ When an AI agent proposes a multi-step financial transaction or code refactoring
     readTime: "8 min read",
     coverGradient: "from-indigo-950 via-slate-900 to-black",
     coverImage: "/assets/images/insights/spatial-materials.jpg",
+    audioDuration: "10 min audio",
+    coverGradient: "from-indigo-950 via-slate-900 to-black",
+    coverImage: "/assets/images/insights/spatial-materials.jpg",
+    figureCaption:
+      "FIG. 03 — Anodized aluminum rod, fluted reeded glass, and slip-cast ceramic sphere on white oak.",
+    editorNote:
+      "Featured in the International Product Architecture Review. Includes kinetic damping curves and spring velocity formulas.",
     seo: {
       metaTitle: "Tactile Interfaces in a Frictionless World | Quantimite Insights",
       metaDescription:
@@ -180,6 +208,7 @@ When a user triggers an action, the feedback is neither abrupt nor floaty; it re
   {
     slug: "zero-downtime-migration-field-report",
     title: "Zero-Downtime Migration of 100 Million Records: An Architectural Field Post-Mortem",
+    folio: "FOLIO NO. 04 • INFRASTRUCTURE DISPATCH",
     excerpt:
       "A transparent breakdown of how our team executed a high-concurrency database transition without dropping a single active websocket session or losing a byte of customer transaction data.",
     category: "Software",
@@ -196,6 +225,13 @@ When a user triggers an action, the feedback is neither abrupt nor floaty; it re
     readTime: "11 min read",
     coverGradient: "from-zinc-900 via-neutral-900 to-black",
     coverImage: "/assets/images/insights/system-monolith.jpg",
+    audioDuration: "15 min audio",
+    coverGradient: "from-zinc-900 via-neutral-900 to-black",
+    coverImage: "/assets/images/insights/system-monolith.jpg",
+    figureCaption:
+      "FIG. 04 — CNC-machined obsidian heat spreader and optical resin block in morning daylight.",
+    editorNote:
+      "Complete post-mortem including CDC pipeline diagrams, dual-write consistency verifiers, and recovery runbooks.",
     seo: {
       metaTitle: "Zero-Downtime Migration Field Post-Mortem | Quantimite Insights",
       metaDescription:
@@ -221,6 +257,7 @@ We deployed a four-stage pipeline:
   {
     slug: "capital-efficient-modern-stack",
     title: "The Capital-Efficient Modern Tech Stack: Building $10M ARR Engines with Lean Engineering",
+    folio: "FOLIO NO. 05 • VENTURE VELOCITY",
     excerpt:
       "How world-class software teams eliminate bloat, double ship velocity, and build resilient, revenue-generating software foundations with small, lethal engineering squads.",
     category: "Startup Tips",
@@ -237,6 +274,13 @@ We deployed a four-stage pipeline:
     readTime: "7 min read",
     coverGradient: "from-amber-950/60 via-slate-900 to-black",
     coverImage: "/assets/images/insights/velocity-chronometer.jpg",
+    audioDuration: "9 min audio",
+    coverGradient: "from-amber-950/60 via-slate-900 to-black",
+    coverImage: "/assets/images/insights/velocity-chronometer.jpg",
+    figureCaption:
+      "FIG. 05 — Precision split-second mechanical chronometer and brass drafting instruments.",
+    editorNote:
+      "The definitive manual for seed and Series A founders on lean technical stack selection and burn reduction.",
     seo: {
       metaTitle: "The Capital-Efficient Modern Tech Stack | Quantimite Insights",
       metaDescription:

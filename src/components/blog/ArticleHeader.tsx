@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { BlogPost } from "@/types/blog";
-import { ChronoDialIcon } from "./BlogIcons";
+import { Clock, Calendar, ChevronRight, Share2, Check, Link as LinkIcon, Sparkles } from "lucide-react";
 
 interface ArticleHeaderProps {
   post: BlogPost;
@@ -81,7 +81,7 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
           )}
         </div>
 
-        {/* Title */}
+        {/* Title in default bold sans */}
         <h1 className="mt-6 text-3xl font-extrabold tracking-tight text-plum sm:text-5xl sm:leading-[1.15]">
           {post.title}
         </h1>
@@ -95,7 +95,7 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
         <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-y border-plum/10 py-6">
           {/* Author info */}
           <div className="flex items-center gap-3.5">
-            <div className="grid h-12 w-12 place-items-center rounded-2xl bg-brand text-white font-extrabold text-base shadow-md">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand font-bold text-white shadow-md">
               {post.author.name.charAt(0)}
             </div>
             <div>
@@ -152,7 +152,7 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
           </div>
         </div>
 
-        {/* Real-World Object Imagery Banner */}
+        {/* Real-World Object Imagery Banner in Default Rounded Container */}
         {post.coverImage && (
           <div className="mt-8 overflow-hidden rounded-3xl border border-plum/10 bg-white/90 shadow-xl backdrop-blur-md">
             <div className="relative aspect-16/9 w-full overflow-hidden bg-plum/5">

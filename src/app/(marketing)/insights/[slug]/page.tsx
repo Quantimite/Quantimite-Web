@@ -83,7 +83,7 @@ export default async function InsightsArticlePage({ params }: PageProps) {
       {/* Search Engine Structured Data */}
       <ArticleJsonLd post={post} />
 
-      {/* Article Header with Default Global Styles & Real-World Visuals */}
+      {/* Article Header with Default Global Styles */}
       <ArticleHeader post={post} />
 
       {/* Article Markdown Content */}
@@ -92,7 +92,7 @@ export default async function InsightsArticlePage({ params }: PageProps) {
       {/* Related Posts Section */}
       <RelatedPosts posts={relatedPosts} />
 
-      {/* Newsletter Signup Module */}
+      {/* Default Newsletter Signup Section */}
       <NewsletterSignup />
     </main>
   );
