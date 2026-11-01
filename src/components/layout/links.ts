@@ -4,6 +4,6 @@ export const links = [
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/research", label: "Research" },
-  { href: "/blog", label: "Insights" },
+  { href: "/insights", label: "Insights" },
   { href: "/careers", label: "Careers" },
 ];

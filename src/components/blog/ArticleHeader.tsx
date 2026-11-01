@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { BlogPost } from "@/types/blog";
-import { Clock, Calendar, ChevronRight, Share2, Check, Link as LinkIcon } from "lucide-react";
+import { Clock, Calendar, ChevronRight, Share2, Check, Link as LinkIcon, Sparkles } from "lucide-react";
 
 interface ArticleHeaderProps {
   post: BlogPost;
@@ -12,7 +12,10 @@ interface ArticleHeaderProps {
 export default function ArticleHeader({ post }: ArticleHeaderProps) {
   const [copied, setCopied] = useState(false);
 
-  const articleUrl = typeof window !== "undefined" ? window.location.href : `https://quantimite.com/blog/${post.slug}`;
+  const articleUrl =
+    typeof window !== "undefined"
+      ? window.location.href
+      : `https://quantimite.com/insights/${post.slug}`;
 
   const copyToClipboard = async () => {
     try {
@@ -26,26 +29,30 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
     }
   };
 
-  const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(articleUrl)}&via=quantimite`;
-  const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(articleUrl)}`;
+  const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+    post.title
+  )}&url=${encodeURIComponent(articleUrl)}&via=quantimite`;
+  const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+    articleUrl
+  )}`;
 
   return (
     <header className="relative pt-10 pb-8 sm:pt-14 sm:pb-12">
       {/* Breadcrumbs */}
       <nav aria-label="Breadcrumb" className="mx-auto max-w-4xl px-6">
-        <ol className="flex flex-wrap items-center gap-1.5 text-xs font-semibold text-plum/60">
+        <ol className="flex flex-wrap items-center gap-2 text-xs font-semibold text-plum/60">
           <li>
             <Link href="/" className="hover:text-plum transition-colors">
               Home
             </Link>
           </li>
-          <ChevronRight className="h-3 w-3" />
+          <span className="text-plum/30">/</span>
           <li>
-            <Link href="/blog" className="hover:text-plum transition-colors">
+            <Link href="/insights" className="hover:text-plum transition-colors">
               Insights
             </Link>
           </li>
-          <ChevronRight className="h-3 w-3" />
+          <span className="text-plum/30">/</span>
           <li>
             <span className="text-violet font-bold">{post.category}</span>
           </li>
@@ -59,16 +66,22 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
             {post.category}
           </span>
           <span className="flex items-center gap-1.5 font-medium text-plum/60">
-            <Clock className="h-3.5 w-3.5" />
+            <ChronoDialIcon size={14} className="text-violet" />
             {post.readTime}
           </span>
-          <span className="flex items-center gap-1.5 font-medium text-plum/60">
-            <Calendar className="h-3.5 w-3.5" />
-            {post.publishedAt}
-          </span>
+          <span className="text-plum/40">&bull;</span>
+          <span className="font-medium text-plum/60">{post.publishedAt}</span>
+          {post.difficulty && (
+            <>
+              <span className="text-plum/40">&bull;</span>
+              <span className="rounded-full bg-plum/5 px-2.5 py-0.5 font-mono text-[11px] font-bold text-plum/70">
+                {post.difficulty}
+              </span>
+            </>
+          )}
         </div>
 
-        {/* Title */}
+        {/* Title in default bold sans */}
         <h1 className="mt-6 text-3xl font-extrabold tracking-tight text-plum sm:text-5xl sm:leading-[1.15]">
           {post.title}
         </h1>
@@ -82,36 +95,27 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
         <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-y border-plum/10 py-6">
           {/* Author info */}
           <div className="flex items-center gap-3.5">
-            <img
-              src={post.author.avatar}
-              alt={post.author.name}
-              className="h-13 w-13 rounded-full object-cover ring-2 ring-violet/20"
-            />
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand font-bold text-white shadow-md">
+              {post.author.name.charAt(0)}
+            </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-base font-bold text-plum">{post.author.name}</span>
               </div>
               <p className="text-xs font-medium text-plum/60">{post.author.role}</p>
-              {post.author.bio && (
-                <p className="mt-0.5 text-xs text-plum/50 max-w-md hidden sm:block">
-                  {post.author.bio}
-                </p>
-              )}
             </div>
           </div>
 
           {/* Social Share Buttons */}
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-plum/60 mr-1 flex items-center gap-1">
-              <Share2 className="h-3.5 w-3.5" /> Share:
-            </span>
+            <span className="text-xs font-bold text-plum/60 mr-1">Share:</span>
 
             {/* Twitter / X */}
             <a
               href={twitterShareUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-plum/10 bg-white/80 text-plum/70 hover:border-violet/40 hover:text-violet hover:bg-white shadow-xs transition-all"
+              className="apple-glass-pill inline-flex h-9 w-9 items-center justify-center rounded-full text-plum/70 hover:text-violet transition-all"
               title="Share on X / Twitter"
             >
               <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
@@ -124,7 +128,7 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
               href={linkedinShareUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-plum/10 bg-white/80 text-plum/70 hover:border-azure/40 hover:text-azure hover:bg-white shadow-xs transition-all"
+              className="apple-glass-pill inline-flex h-9 w-9 items-center justify-center rounded-full text-plum/70 hover:text-azure transition-all"
               title="Share on LinkedIn"
             >
               <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
@@ -136,23 +140,30 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
             <button
               type="button"
               onClick={copyToClipboard}
-              className="relative inline-flex h-9 items-center gap-1.5 rounded-full border border-plum/10 bg-white/80 px-3.5 text-xs font-semibold text-plum/70 hover:border-violet/40 hover:text-violet hover:bg-white shadow-xs transition-all cursor-pointer"
+              className="apple-glass-pill inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-xs font-semibold text-plum/70 cursor-pointer"
               title="Copy article link"
             >
               {copied ? (
-                <>
-                  <Check className="h-3.5 w-3.5 text-emerald-600" />
-                  <span className="text-emerald-600">Copied!</span>
-                </>
+                <span className="text-emerald-600 font-bold">Copied!</span>
               ) : (
-                <>
-                  <LinkIcon className="h-3.5 w-3.5" />
-                  <span>Copy Link</span>
-                </>
+                <span>Copy Link</span>
               )}
             </button>
           </div>
         </div>
+
+        {/* Real-World Object Imagery Banner in Default Rounded Container */}
+        {post.coverImage && (
+          <div className="mt-8 overflow-hidden rounded-3xl border border-plum/10 bg-white/90 shadow-xl backdrop-blur-md">
+            <div className="relative aspect-16/9 w-full overflow-hidden bg-plum/5">
+              <img
+                src={post.coverImage}
+                alt={post.title}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );
