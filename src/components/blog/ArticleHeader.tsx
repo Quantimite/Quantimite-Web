@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { BlogPost } from "@/types/blog";
-import { Clock, Calendar, ChevronRight, Share2, Check, Link as LinkIcon } from "lucide-react";
+import { Clock, Calendar, ChevronRight, Share2, Check, Link as LinkIcon, Sparkles } from "lucide-react";
 
 interface ArticleHeaderProps {
   post: BlogPost;
@@ -12,7 +12,10 @@ interface ArticleHeaderProps {
 export default function ArticleHeader({ post }: ArticleHeaderProps) {
   const [copied, setCopied] = useState(false);
 
-  const articleUrl = typeof window !== "undefined" ? window.location.href : `https://quantimite.com/blog/${post.slug}`;
+  const articleUrl =
+    typeof window !== "undefined"
+      ? window.location.href
+      : `https://quantimite.com/insights/${post.slug}`;
 
   const copyToClipboard = async () => {
     try {
@@ -26,8 +29,12 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
     }
   };
 
-  const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(articleUrl)}&via=quantimite`;
-  const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(articleUrl)}`;
+  const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+    post.title
+  )}&url=${encodeURIComponent(articleUrl)}&via=quantimite`;
+  const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+    articleUrl
+  )}`;
 
   return (
     <header className="relative pt-10 pb-8 sm:pt-14 sm:pb-12">
@@ -41,7 +48,7 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
           </li>
           <ChevronRight className="h-3 w-3" />
           <li>
-            <Link href="/blog" className="hover:text-plum transition-colors">
+            <Link href="/insights" className="hover:text-plum transition-colors">
               Insights
             </Link>
           </li>
@@ -68,7 +75,7 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
           </span>
         </div>
 
-        {/* Title */}
+        {/* Title in default bold sans */}
         <h1 className="mt-6 text-3xl font-extrabold tracking-tight text-plum sm:text-5xl sm:leading-[1.15]">
           {post.title}
         </h1>
@@ -82,21 +89,14 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
         <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-y border-plum/10 py-6">
           {/* Author info */}
           <div className="flex items-center gap-3.5">
-            <img
-              src={post.author.avatar}
-              alt={post.author.name}
-              className="h-13 w-13 rounded-full object-cover ring-2 ring-violet/20"
-            />
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand font-bold text-white shadow-md">
+              {post.author.name.charAt(0)}
+            </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-base font-bold text-plum">{post.author.name}</span>
               </div>
               <p className="text-xs font-medium text-plum/60">{post.author.role}</p>
-              {post.author.bio && (
-                <p className="mt-0.5 text-xs text-plum/50 max-w-md hidden sm:block">
-                  {post.author.bio}
-                </p>
-              )}
             </div>
           </div>
 
@@ -153,6 +153,19 @@ export default function ArticleHeader({ post }: ArticleHeaderProps) {
             </button>
           </div>
         </div>
+
+        {/* Real-World Object Imagery Banner in Default Rounded Container */}
+        {post.coverImage && (
+          <div className="mt-8 overflow-hidden rounded-3xl border border-plum/10 bg-white/90 shadow-xl backdrop-blur-md">
+            <div className="relative aspect-16/9 w-full overflow-hidden bg-plum/5">
+              <img
+                src={post.coverImage}
+                alt={post.title}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

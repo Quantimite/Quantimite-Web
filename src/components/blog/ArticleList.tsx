@@ -232,7 +232,7 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
 
                   {/* Article Title */}
                   <h3 className="mt-4 text-xl font-bold tracking-tight text-plum transition-colors group-hover:text-violet">
-                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                    <Link href={`/insights/${post.slug}`}>{post.title}</Link>
                   </h3>
 
                   {/* Excerpt */}
@@ -270,7 +270,7 @@ export default function ArticleList({ posts, allTags }: ArticleListProps) {
                   </div>
 
                   <Link
-                    href={`/blog/${post.slug}`}
+                    href={`/insights/${post.slug}`}
                     className="inline-flex items-center gap-1 text-xs font-bold text-violet transition-colors hover:text-azure"
                   >
                     Read
