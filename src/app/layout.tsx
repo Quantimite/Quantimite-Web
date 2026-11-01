@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
+import { ChatProvider } from "@/context/ChatContext";
+import ChatWidget from "@/components/chat/ChatWidget";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 
@@ -13,7 +15,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={manrope.variable} suppressHydrationWarning>
       <body className="font-sans antialiased" suppressHydrationWarning>
-        {children}
+        <ChatProvider>
+          {children}
+          <ChatWidget />
+        </ChatProvider>
       </body>
     </html>
   );
