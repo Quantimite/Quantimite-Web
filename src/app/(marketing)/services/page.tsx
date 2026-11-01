@@ -128,7 +128,7 @@ export default function ServicesPage() {
         <MotionConfig reducedMotion="user">
             <div className="bg-white">
                 {/* TOP: centred headline with the paragraph under it */}
-                <section className="mx-auto max-w-[1600px] px-6 pb-4 pt-14 text-center sm:pt-20">
+                <section className="mx-auto max-w-[1600px] px-6 pb-4 pt-6 text-center sm:pt-10">
                     <h1 className="whitespace-nowrap text-[clamp(1.75rem,6.2vw,6.5rem)] font-extrabold leading-[1.04] tracking-tight text-plum">
                         <Line>Architecting the</Line>
                         <Line delay={0.12}><span className="text-brand">digital frontier.</span></Line>
