@@ -7,16 +7,24 @@ const ASPECT = 627 / 679;
 const VERT = `attribute vec2 a; varying vec2 v;
 void main(){ v = vec2(a.x*.5+.5, .5-a.y*.5); gl_Position = vec4(a,0.,1.); }`;
 
-// The mascot is warped smoothly in place (no layers, no ghosting).
-// Coordinates are normalised image positions, origin top-left.
 const FRAG = `precision highp float; varying vec2 v;
+// hand moves for HAND_MOVE seconds, rests, and repeats every HAND_EVERY seconds
+#define HAND_MOVE 3.
+#define HAND_EVERY 8.
 uniform sampler2D tex;
 uniform float uT, uNear, uSpd, uHov, uBlink, uEarL, uEarR;
 uniform vec2 uCur, uEye;
 float G(vec2 p, vec2 c, vec2 r){ vec2 q=(p-c)/r; float s=dot(q,q); return exp(-s*s); }
 vec2 R(vec2 p, vec2 c, float a){ vec2 q=p-c; float s=sin(a), k=cos(a); return vec2(k*q.x-s*q.y, s*q.x+k*q.y)-q; }
+
+float arm(vec2 q, vec2 a, float s0, float s1, float reach){
+  vec2 D=vec2(-.919,-.394), v=q-a;
+  float s=dot(v,D), lat=abs(v.x*D.y-v.y*D.x);
+  // Widened lateral mask (.12 to .18) and softened reach to prevent clipping the thumb/fingers
+  return smoothstep(s0,s1,s)*(1.-smoothstep(.12,.18,lat))*(1.-smoothstep(reach,reach+.06,length(v)));
+}
+
 float K(vec2 p, vec2 c, float a, float b){ return smoothstep(a,b,length(p-c)); }
-// eyelids sweep over the eye and take on the surrounding fur colour
 vec4 lid(vec4 c, vec2 p, vec2 e){
   float m=1.-smoothstep(.8,1.,length((p-e)/vec2(.062,.066)));
   float yy=(p.y-(e.y-.066))/.132;
@@ -27,7 +35,6 @@ vec4 lid(vec4 c, vec2 p, vec2 e){
   c.rgb*=1.-.45*uBlink*G(p,e+vec2(0.,.012),vec2(.05,.009));
   return c;
 }
-// real eyeball movement: repaint the eye opening, then draw the iris disc shifted by ev
 vec4 eyeball(vec4 c, vec2 t0, vec2 e, vec2 ev){
   float m=1.-smoothstep(.84,1.,length((t0-e)/vec2(.050,.040)));
   vec2 t=t0-ev;
@@ -38,36 +45,32 @@ vec4 eyeball(vec4 c, vec2 t0, vec2 e, vec2 ev){
 void main(){
   vec2 p=v, d=vec2(0.);
   float live=1.+uNear*.8;
-  // head turns and nods toward the cursor
   float wh=(1.-smoothstep(.40,.50,p.y))*(1.-smoothstep(.68,.74,p.x)*smoothstep(.30,.38,p.y));
   d+=(R(p,vec2(.44,.47),-uCur.x*.05)+vec2(-uCur.x*.012,-uCur.y*.008))*wh;
-  // ears: constant jiggle + random flicks + perk up when the cursor moves fast
   vec2 PL=vec2(.30,.21), PR=vec2(.60,.20);
   float eL=sin(uT*2.3)*.025+uEarL+uSpd*.05, eR=sin(uT*2.1+1.)*.025-uEarR-uSpd*.05;
   d+=R(p,PL,-eL)*G(p,vec2(.25,.11),vec2(.10,.14))*K(p,PL,.02,.18);
   d+=R(p,PR,-eR)*G(p,vec2(.65,.11),vec2(.10,.14))*K(p,PR,.02,.18);
-  // smile: widens, lifts at the corners, mouth opens and closes
   vec2 M=vec2(.43,.405);
   float wm=G(p,M,vec2(.08,.045));
   float am=.10+.16*(.5+.5*sin(uT*1.7))+.16*uNear;
   float op=.15+.30*(.5+.5*sin(uT*2.9));
   d+=vec2(-(p.x-M.x)*am*.9, abs(p.x-M.x)*am*.9-(p.y-M.y)*op)*wm;
-  // right hand says hi: raises on a timer (and when the cursor comes near) and waves from the wrist
-  float ph=mod(uT,15.);
-  float hi=max(smoothstep(0.,.5,ph)*(1.-smoothstep(3.2,3.8,ph)), max(smoothstep(.15,.6,uNear)*.9, uHov));
-  vec2 E=vec2(.21,.63), Wr=vec2(.14,.60);
-  float aw=.06+.04*sin(uT*2.8)+.36*hi;
-  d+=R(p,E,-aw)*G(p,vec2(.11,.57),vec2(.14,.10))*K(p,E,.02,.14);
-  float wv=(sin(uT*9.)*.42*hi)+sin(uT*2.8)*.05;
-  d+=R(p,Wr,-wv)*G(p,vec2(.06,.55),vec2(.09,.08))*K(p,Wr,.015,.07);
+  
+  // right hand: rigid paw pivot from the elbow only, with an expanded reach of .35
+  float ph=mod(uT,HAND_EVERY);
+  float act=max(smoothstep(0.,.4,ph)*(1.-smoothstep(HAND_MOVE-.4,HAND_MOVE,ph)), smoothstep(.1,.6,uHov));
+  vec2 E=vec2(.21,.63), q=p;
+  float aw=.025+.01*sin(uT*1.3)+act*(.07+.10*sin(uT*5.)+.02*sin(uT*10.))+uCur.x*.015;
+  q+=R(q,E,-aw)*arm(q,E,0.,.12,.35); 
+  d+=q-p;
+  
   vec2 E2=vec2(.69,.62);
   d+=R(p,E2,-sin(uT*2.+1.2)*.06)*G(p,vec2(.60,.69),vec2(.11,.09))*K(p,E2,.03,.12);
-  // legs shift weight left and right
   float lg=sin(uT*2.4)*.06*live;
   vec2 HL=vec2(.33,.76), HR=vec2(.50,.77);
   d+=R(p,HL,-lg)*G(p,vec2(.30,.88),vec2(.12,.13))*K(p,HL,.04,.2);
   d+=R(p,HR,lg)*G(p,vec2(.53,.88),vec2(.11,.13))*K(p,HR,.04,.2);
-  // tail: big swing from the base plus a wave that travels up to the tip
   vec2 B=vec2(.70,.78);
   float td=length(p-B), k=smoothstep(.06,.5,td);
   float hd=1.-smoothstep(.9,1.1,length((p-vec2(.43,.30))/vec2(.30,.22)));
@@ -77,13 +80,14 @@ void main(){
   d+=R(p,B,-sw*k)*wt;
   d.x+=sin(uT*4.2-td*11.)*.012*k*wt*sp;
   d.y+=cos(uT*3.1-td*9.)*.008*k*wt*sp;
+  
   vec2 t0=p+d, EL=vec2(.344,.289), ER=vec2(.534,.284), ev=uEye*vec2(.014,.010);
-  vec4 c=texture2D(tex,t0);
+  float inb=step(0.,t0.x)*step(t0.x,1.)*step(0.,t0.y)*step(t0.y,1.);
+  vec4 c=texture2D(tex,t0)*inb;
   c=eyeball(c,t0,EL,ev);
   c=eyeball(c,t0,ER,ev);
   c=lid(c,p,EL);
   c=lid(c,p,ER);
-  // glowing ear rings and tail LEDs pulse
   float gl=G(p,vec2(.247,.15),vec2(.05,.08))+G(p,vec2(.646,.155),vec2(.045,.07))+G(p,vec2(.75,.50),vec2(.08,.10))+G(p,vec2(.79,.625),vec2(.03,.05));
   c.rgb=min(c.rgb*(1.+gl*.45*(.5+.5*sin(uT*3.))),vec3(c.a));
   gl_FragColor=c;
@@ -156,7 +160,7 @@ export default function MascotImage() {
       const r = canvas.getBoundingClientRect();
       const cx = (e.clientX - r.left) / r.width, cy = (e.clientY - r.top) / r.height;
       s.nearT = Math.max(0, 1 - Math.hypot(cx - 0.45, cy - 0.45) / 0.9);
-      s.hovT = Math.max(0, 1 - Math.hypot(cx - 0.1, cy - 0.57) / 0.35);
+      s.hovT = Math.max(0, 1 - Math.hypot(cx - 0.1, cy - 0.57) / 0.25);
       s.spdT = Math.min(1, (Math.abs(e.movementX) + Math.abs(e.movementY)) / 60);
       let vx = (e.clientX - (r.left + r.width * 0.44)) / (innerWidth * 0.4);
       let vy = (e.clientY - (r.top + r.height * 0.29)) / (innerHeight * 0.4);
