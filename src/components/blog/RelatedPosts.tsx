@@ -22,7 +22,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
             </h2>
           </div>
           <Link
-            href="/blog"
+            href="/insights"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-violet hover:text-azure transition-colors"
           >
             <span>View all insights</span>
@@ -37,8 +37,22 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
               className="apple-glass-panel group relative flex flex-col justify-between rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet/40 hover:shadow-xl"
             >
               <div>
-                {/* Visual accent bar */}
-                <div className={`h-2 w-full rounded-full bg-gradient-to-r ${post.coverGradient} mb-4`} />
+                {/* Visual artwork preview */}
+                {post.coverImage ? (
+                  <div className="relative mb-4 aspect-16/9 w-full overflow-hidden rounded-2xl border border-plum/10 bg-plum/5">
+                    <img
+                      src={post.coverImage}
+                      alt={post.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"
+                    />
+                  </div>
+                ) : (
+                  <div className={`h-2 w-full rounded-full bg-gradient-to-r ${post.coverGradient} mb-4`} />
+                )}
 
                 <div className="flex items-center justify-between text-xs">
                   <span className="rounded-full bg-violet/10 px-2.5 py-0.5 font-bold text-violet">
@@ -51,7 +65,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
                 </div>
 
                 <h3 className="mt-3 text-lg font-bold tracking-tight text-plum transition-colors group-hover:text-violet">
-                  <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  <Link href={`/insights/${post.slug}`}>{post.title}</Link>
                 </h3>
 
                 <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-plum/70">
@@ -64,7 +78,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
                   By {post.author.name}
                 </span>
                 <Link
-                  href={`/blog/${post.slug}`}
+                  href={`/insights/${post.slug}`}
                   className="inline-flex items-center gap-1 text-xs font-bold text-violet transition-colors hover:text-azure"
                 >
                   <span>Read</span>

@@ -172,7 +172,7 @@ export default function FeaturedArticle({ post }: FeaturedArticleProps) {
               </div>
 
               <h2 className="mt-6 text-2xl font-bold tracking-tight text-plum hover:text-violet sm:text-4xl sm:leading-tight">
-                <Link href={`/blog/${post.slug}`} className="transition-colors">
+                <Link href={`/insights/${post.slug}`} className="transition-colors">
                   {post.title}
                 </Link>
               </h2>
@@ -208,7 +208,7 @@ export default function FeaturedArticle({ post }: FeaturedArticleProps) {
                 </div>
               </div>
 
-              <Button href={`/blog/${post.slug}`} size="sm" className="group">
+              <Button href={`/insights/${post.slug}`} size="sm" className="group">
                 <span>Read Full Article</span>
                 <ModernArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
               </Button>

@@ -21,6 +21,8 @@ export interface BlogPost {
   readTime: string;
   featured?: boolean;
   coverGradient: string;
+  coverImage?: string;
+  difficulty?: "Foundational" | "Advanced" | "Staff+";
   seo: {
     metaTitle: string;
     metaDescription: string;
