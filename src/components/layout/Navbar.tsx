@@ -1,18 +1,9 @@
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
-import { useChat } from "@/context/ChatContext";
-
-export const links = [
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/research", label: "Research" },
-  { href: "/insights", label: "Insights" },
-  { href: "/careers", label: "Careers" },
-];
 import Logo from "./Logo";
 import { links } from "./links";
 
