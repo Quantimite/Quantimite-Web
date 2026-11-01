@@ -24,7 +24,7 @@ export default function RedesignedGlassContactPage() {
 
             {/* 
         ========================================
-        LIQUID BUBBLE ANIMATION
+        LIQUID BUBBLE ANIMATION (Behind Glass)
         ========================================
       */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -35,7 +35,7 @@ export default function RedesignedGlassContactPage() {
                         scale: [1, 1.2, 0.95, 1],
                     }}
                     transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-[35%] left-[10%] h-[400px] w-[400px] rounded-full bg-violet/15 blur-[120px]"
+                    className="absolute top-[35%] left-[10%] h-[400px] w-[400px] rounded-full bg-violet/20 blur-[100px]"
                 />
 
                 <motion.div
@@ -45,20 +45,20 @@ export default function RedesignedGlassContactPage() {
                         scale: [1, 0.9, 1.15, 1],
                     }}
                     transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute bottom-[10%] right-[10%] h-[450px] w-[450px] rounded-full bg-azure/15 blur-[130px]"
+                    className="absolute bottom-[10%] right-[10%] h-[450px] w-[450px] rounded-full bg-azure/20 blur-[110px]"
                 />
             </div>
 
-            {/* Main Container Grid (Scaled up to max-w-7xl) */}
+            {/* Main Container Grid */}
             <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-12 lg:gap-20">
 
-                {/* Left Column: Larger Animated Text & Details */}
+                {/* Left Column: Animated Text & Details */}
                 <div className="lg:col-span-5 space-y-7">
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, ease: EASE }}
-                        className="inline-flex items-center gap-2 rounded-full border border-plum/10 bg-white/80 px-4 py-2 text-xs font-semibold text-plum/70 shadow-xs backdrop-blur-md"
+                        className="inline-flex items-center gap-2 rounded-full border border-plum/10 bg-white/70 px-4 py-2 text-xs font-semibold text-plum/75 shadow-xs backdrop-blur-xl"
                     >
                         <Sparkles className="h-4 w-4 text-violet" />
                         <span>Available for new partnerships</span>
@@ -87,7 +87,7 @@ export default function RedesignedGlassContactPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
-                        className="text-base text-plum/70 sm:text-lg leading-relaxed max-w-lg"
+                        className="text-base text-plum/75 sm:text-lg leading-relaxed max-w-lg"
                     >
                         Bridge high-performance engineering with exquisite design. Drop your specifications to start our workflow.
                     </motion.p>
@@ -96,7 +96,7 @@ export default function RedesignedGlassContactPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
-                        className="flex items-center gap-8 pt-3 text-sm text-plum/70 font-medium"
+                        className="flex items-center gap-8 pt-3 text-sm text-plum/75 font-medium"
                     >
                         <div className="flex items-center gap-2.5">
                             <Mail className="h-4 w-4 text-violet" />
@@ -109,17 +109,18 @@ export default function RedesignedGlassContactPage() {
                     </motion.div>
                 </div>
 
-                {/* Right Column: Larger Glassmorphism Form Card */}
+                {/* Right Column: Enhanced Glassmorphism Form Card */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
                     className="lg:col-span-7"
                 >
-                    <div className="rounded-[2rem] border border-plum/15 bg-white/75 p-8 sm:p-10 shadow-2xl shadow-violet/15 backdrop-blur-2xl relative overflow-hidden">
+                    {/* Frosted Glass Container with backdrop-blur-2xl and translucent white */}
+                    <div className="rounded-[2rem] border border-white/80 bg-white/60 p-8 sm:p-10 shadow-2xl shadow-violet/15 backdrop-blur-2xl relative overflow-hidden">
 
-                        {/* Top highlight line */}
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet/40 to-transparent" />
+                        {/* Top specular highlight edge */}
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent" />
 
                         {submitted ? (
                             <motion.div
@@ -131,7 +132,7 @@ export default function RedesignedGlassContactPage() {
                                     <CheckCircle2 className="h-7 w-7" />
                                 </div>
                                 <h3 className="text-2xl font-bold text-plum">Transmission Successful</h3>
-                                <p className="text-sm text-plum/70 max-w-sm mx-auto leading-relaxed">
+                                <p className="text-sm text-plum/75 max-w-sm mx-auto leading-relaxed">
                                     Your project specifications have been logged. Our core engineering team will connect shortly.
                                 </p>
                                 <button
@@ -151,7 +152,7 @@ export default function RedesignedGlassContactPage() {
                                             id="name"
                                             required
                                             placeholder="John Doe"
-                                            className="w-full rounded-xl border border-plum/15 bg-white/90 px-4 py-3 text-sm text-plum placeholder-plum/35 transition-all focus:border-violet focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet/20 backdrop-blur-md shadow-xs"
+                                            className="w-full rounded-xl border border-plum/15 bg-white/70 px-4 py-3 text-sm text-plum placeholder-plum/35 transition-all focus:border-violet focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet/25 backdrop-blur-md shadow-xs"
                                         />
                                     </div>
                                     <div className="space-y-2">
@@ -161,7 +162,7 @@ export default function RedesignedGlassContactPage() {
                                             id="email"
                                             required
                                             placeholder="john@company.com"
-                                            className="w-full rounded-xl border border-plum/15 bg-white/90 px-4 py-3 text-sm text-plum placeholder-plum/35 transition-all focus:border-violet focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet/20 backdrop-blur-md shadow-xs"
+                                            className="w-full rounded-xl border border-plum/15 bg-white/70 px-4 py-3 text-sm text-plum placeholder-plum/35 transition-all focus:border-violet focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet/25 backdrop-blur-md shadow-xs"
                                         />
                                     </div>
                                 </div>
@@ -171,7 +172,7 @@ export default function RedesignedGlassContactPage() {
                                     <select
                                         id="subject"
                                         required
-                                        className="w-full rounded-xl border border-plum/15 bg-white/90 px-4 py-3 text-sm text-plum transition-all focus:border-violet focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet/20 backdrop-blur-md shadow-xs"
+                                        className="w-full rounded-xl border border-plum/15 bg-white/70 px-4 py-3 text-sm text-plum transition-all focus:border-violet focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet/25 backdrop-blur-md shadow-xs"
                                     >
                                         <option value="" disabled selected>Select an area</option>
                                         <option value="software">Software Engineering & Architecture</option>
@@ -188,7 +189,7 @@ export default function RedesignedGlassContactPage() {
                                         required
                                         rows={4}
                                         placeholder="Tell us about your project goals and timeline..."
-                                        className="w-full resize-none rounded-xl border border-plum/15 bg-white/90 px-4 py-3 text-sm text-plum placeholder-plum/35 transition-all focus:border-violet focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet/20 backdrop-blur-md shadow-xs"
+                                        className="w-full resize-none rounded-xl border border-plum/15 bg-white/70 px-4 py-3 text-sm text-plum placeholder-plum/35 transition-all focus:border-violet focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet/25 backdrop-blur-md shadow-xs"
                                     ></textarea>
                                 </div>
 
