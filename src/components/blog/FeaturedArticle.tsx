@@ -131,7 +131,7 @@ export default function FeaturedArticle({ post }: FeaturedArticleProps) {
 
               {/* Title */}
               <h2 className="mt-5 text-2xl font-bold tracking-tight text-plum hover:text-violet sm:text-3xl lg:text-4xl">
-                <Link href={`/blog/${post.slug}`} className="transition-colors">
+                <Link href={`/insights/${post.slug}`} className="transition-colors">
                   {post.title}
                 </Link>
               </h2>
@@ -164,11 +164,13 @@ export default function FeaturedArticle({ post }: FeaturedArticleProps) {
                 />
                 <div>
                   <p className="text-sm font-bold text-plum">{post.author.name}</p>
-                  <p className="text-xs text-plum/60">{post.author.role} • {post.publishedAt}</p>
+                  <p className="text-xs text-plum/60">
+                    {post.author.role} • {post.publishedAt}
+                  </p>
                 </div>
               </div>
 
-              <Button href={`/blog/${post.slug}`} size="sm" className="group">
+              <Button href={`/insights/${post.slug}`} size="sm" className="group">
                 Read Article
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
@@ -186,7 +188,7 @@ export default function FeaturedArticle({ post }: FeaturedArticleProps) {
                 Architecture Blueprint
               </div>
               <div className="mt-3 text-lg font-bold leading-snug text-white">
-                React 19 & Next.js Edge System Design
+                {post.title}
               </div>
               <div className="mt-4 flex items-center gap-2 text-xs text-white/70">
                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
