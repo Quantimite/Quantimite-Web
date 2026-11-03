@@ -17,3 +17,5 @@ export async function logout() {
   (await cookies()).delete("cmp_session");
   redirect(`/${SLUG}`);
 }
+
+export { logout as logoutAdmin };
