@@ -1586,3 +1586,35 @@
     -webkit-text-fill-color: #ffffff;
     color: #ffffff;
 }
+
+/* ==========================================
+   FINAL OVERRIDE: OPEN POSITIONS COLOR & FLOW
+   ========================================== */
+
+.vacanciesSection {
+    background: #f6f4ff !important;
+    /* Matches 'Why Join Us' for a seamless flow */
+}
+
+/* Force Deep Plum for "Open" */
+.vacancyHeader h2,
+.vacancyHeader h2 * {
+    color: #2a1340 !important;
+    -webkit-text-fill-color: initial !important;
+}
+
+/* Force Vibrant Violet for "positions." */
+.vacancyHeader h2 span,
+.vacancyHeader h2 span * {
+    color: #a818f5 !important;
+    -webkit-text-fill-color: initial !important;
+}
+
+/* Fix Subtitle & Eyebrow Contrast */
+.vacancyHeader>p {
+    color: #74677f !important;
+}
+
+.vacanciesSection .eyebrow {
+    color: #76558e !important;
+}

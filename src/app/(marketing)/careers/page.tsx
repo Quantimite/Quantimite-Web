@@ -54,6 +54,74 @@ const pillars = [
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+/* --- Modern Text Reveal Animation Variants --- */
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const fadeReveal = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease },
+  },
+};
+
+/* --- Advanced Character-Level Animation Logic --- */
+const charVariant = {
+  hidden: { opacity: 0, y: 40, rotateX: -40, filter: "blur(8px)", scale: 0.8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    filter: "blur(0px)",
+    scale: 1,
+    transition: {
+      type: "spring",
+      damping: 16,
+      stiffness: 120,
+      mass: 0.6,
+    },
+  },
+};
+
+function AnimatedText({ text, className }: { text: string; className?: string }) {
+  const reduceMotion = useReducedMotion();
+  if (reduceMotion) return <span className={className}>{text}</span>;
+
+  // Split text into words, then characters, preserving spaces
+  const words = text.split(" ");
+
+  return (
+    <span style={{ display: "inline-block" }}>
+      {words.map((word, wordIndex) => (
+        <span key={wordIndex} style={{ display: "inline-block", whiteSpace: "nowrap" }}>
+          {word.split("").map((char, charIndex) => (
+            <motion.span
+              key={`${wordIndex}-${charIndex}`}
+              variants={charVariant}
+              style={{ display: "inline-block" }}
+              className={className}
+            >
+              {char}
+            </motion.span>
+          ))}
+          {/* Add a space after each word except the last one */}
+          {wordIndex !== words.length - 1 && <span style={{ display: "inline-block" }}>&nbsp;</span>}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function Eyebrow({ children }: { children: ReactNode }) {
   return (
     <div className={styles.eyebrow}>
@@ -175,36 +243,54 @@ function Hero() {
       <div className={styles.heroInner}>
         <motion.div
           className={styles.heroCopy}
-          initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease }}
+          initial={reduceMotion ? false : "hidden"}
+          animate="visible"
+          variants={staggerContainer}
         >
-          <Eyebrow>
-            Careers at Quantimite{" "}
-            <span className={styles.eyebrowDivider}>/</span> 2026
-          </Eyebrow>
+          <motion.div variants={reduceMotion ? {} : fadeReveal}>
+            <Eyebrow>
+              Careers at Quantimite{" "}
+              <span className={styles.eyebrowDivider}>/</span> 2026
+            </Eyebrow>
+          </motion.div>
 
           <h1 id="careers-title" className={styles.heroTitle}>
-            <span className={styles.titleLine}>MAKE YOUR</span>
-            <span className={`${styles.titleLine} ${styles.titleAccent}`}>
-              NEXT MOVE<span className={styles.titlePeriod}>.</span>
-            </span>
+            <motion.span
+              className={styles.titleLine}
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.04, delayChildren: 0.2 } }
+              }}
+            >
+              <AnimatedText text="MAKE YOUR" />
+            </motion.span>
+
+            <motion.span
+              className={`${styles.titleLine} ${styles.titleAccent}`}
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.04, delayChildren: 0.5 } }
+              }}
+            >
+              <AnimatedText text="NEXT MOVE" />
+              <motion.span variants={charVariant} className={styles.titlePeriod}>.</motion.span>
+            </motion.span>
           </h1>
 
           <motion.p
+            variants={reduceMotion ? {} : fadeReveal}
             className={styles.heroLead}
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.24, ease }}
           >
             Build meaningful products with people who care about great work.
           </motion.p>
 
           <motion.div
+            variants={reduceMotion ? {} : fadeReveal}
             className={styles.heroActions}
-            initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.38, ease }}
           >
             <MagneticLink href="#vacancies-section">
               Explore vacancies
@@ -220,9 +306,9 @@ function Hero() {
           className={styles.heroArtwork}
           aria-hidden="true"
           style={reduceMotion ? undefined : { x: visualX, y: visualY }}
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.88, rotate: -8 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 1.2, delay: 0.18, ease }}
+          initial={reduceMotion ? false : { opacity: 0, scale: 0.88, rotate: -8, filter: "blur(20px)" }}
+          animate={{ opacity: 1, scale: 1, rotate: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.4, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className={styles.artworkHalo} />
           <div className={styles.artworkOrbitOne} />
@@ -253,10 +339,15 @@ function Hero() {
         </motion.div>
       </div>
 
-      <div className={styles.heroFooter}>
+      <motion.div
+        className={styles.heroFooter}
+        initial={reduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 1 }}
+      >
         <span>INDEPENDENT THINKERS. SHARED MOMENTUM.</span>
         <span>Q / CAREERS</span>
-      </div>
+      </motion.div>
     </section>
   );
 }
@@ -291,8 +382,8 @@ function Pillar({
     <motion.article
       className={styles.pillar}
       onPointerMove={handlePointerMove}
-      initial={reduceMotion ? false : { opacity: 0, y: 34 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 34, filter: "blur(8px)", scale: 0.97 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
       whileHover={
         reduceMotion
           ? undefined
@@ -303,7 +394,12 @@ function Pillar({
       transition={
         reduceMotion
           ? { duration: 0 }
-          : { duration: 0.7, delay: index * 0.12, ease }
+          : {
+            type: "spring",
+            stiffness: 60,
+            damping: 14,
+            delay: index * 0.12
+          }
       }
     >
       <div className={styles.pillarTop}>
@@ -325,19 +421,38 @@ function Pillar({
 }
 
 function WhyJoin() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="why-quantimite" className={styles.whySection}>
       <div className={styles.sectionShell}>
-        <div className={styles.sectionIntro}>
+        <motion.div
+          className={styles.sectionIntro}
+          initial={reduceMotion ? false : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+        >
           <div>
-            <Eyebrow>The way we work</Eyebrow>
-            <h2>
-              Good work needs
+            <motion.div variants={reduceMotion ? {} : fadeReveal}>
+              <Eyebrow>The way we work</Eyebrow>
+            </motion.div>
+
+            <motion.h2
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.035, delayChildren: 0.1 } }
+              }}
+            >
+              <AnimatedText text="Good work needs" />
               <br />
-              <span>good people.</span>
-            </h2>
+              <span><AnimatedText text="good people." /></span>
+            </motion.h2>
           </div>
-        </div>
+        </motion.div>
 
         <div className={styles.pillars}>
           {pillars.map((item, index) => (
@@ -349,7 +464,7 @@ function WhyJoin() {
   );
 }
 
-/* OPEN POSITIONS / RADAR SECTION - PRESERVED */
+/* OPEN POSITIONS / RADAR SECTION */
 
 function RadarDisplay() {
   const reduceMotion = useReducedMotion();
@@ -391,21 +506,40 @@ function RadarDisplay() {
 }
 
 function Vacancies() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="vacancies-section" className={styles.vacanciesSection}>
       <div className={styles.vacancyShell}>
-        <div className={styles.vacancyHeader}>
+        <motion.div
+          className={styles.vacancyHeader}
+          initial={reduceMotion ? false : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+        >
           <div>
-            <Eyebrow>Find your place</Eyebrow>
-            <h2>
-              Open <span>positions.</span>
-            </h2>
+            <motion.div variants={reduceMotion ? {} : fadeReveal}>
+              <Eyebrow>Find your place</Eyebrow>
+            </motion.div>
+
+            <motion.h2
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.04, delayChildren: 0.1 } }
+              }}
+            >
+              <AnimatedText text="Open" /> <span><AnimatedText text="positions." /></span>
+            </motion.h2>
           </div>
-          <p>
+          <motion.p variants={reduceMotion ? {} : fadeReveal}>
             We&apos;re always interested in meeting people who see possibility
             where others see problems.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         <div className={styles.recruitmentConsole}>
           <div className={styles.consoleTop}>
@@ -424,20 +558,27 @@ function Vacancies() {
           {vacancies.length === 0 ? (
             <div className={styles.emptyState}>
               <RadarDisplay />
-              <div className={styles.emptyCopy}>
-                <span className={styles.emptyIndex}>
+              <motion.div
+                className={styles.emptyCopy}
+                initial={reduceMotion ? false : "hidden"}
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={staggerContainer}
+              >
+                <motion.span variants={reduceMotion ? {} : fadeReveal} className={styles.emptyIndex}>
                   NO ACTIVE SIGNALS / 000
-                </span>
-                <h3>
+                </motion.span>
+                <motion.h3 variants={reduceMotion ? {} : fadeReveal}>
                   Scanning for talent...
                   <br />
                   <span>Currently no open roles.</span>
-                </h3>
-                <p>
+                </motion.h3>
+                <motion.p variants={reduceMotion ? {} : fadeReveal}>
                   Our sensors are always active for exceptional engineering
                   talent. Submit your application to our direct talent pool.
-                </p>
-                <a
+                </motion.p>
+                <motion.a
+                  variants={reduceMotion ? {} : fadeReveal}
                   className={styles.applicationLink}
                   href={`mailto:${APPLICATION_EMAIL}?subject=${encodeURIComponent(
                     "Open Application | Quantimite"
@@ -445,8 +586,8 @@ function Vacancies() {
                 >
                   <span>Send open application</span>
                   <ArrowUpRight size={18} />
-                </a>
-              </div>
+                </motion.a>
+              </motion.div>
             </div>
           ) : (
             <div className={styles.roleList}>
@@ -454,12 +595,14 @@ function Vacancies() {
                 <motion.article
                   key={`${vacancy.title}-${vacancy.dept}`}
                   className={styles.roleRow}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={reduceMotion ? false : { opacity: 0, y: 25, filter: "blur(6px)" }}
+                  whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
                   viewport={{ once: true }}
                   transition={{
-                    duration: 0.5,
-                    delay: index * 0.08,
-                    ease,
+                    type: "spring",
+                    stiffness: 70,
+                    damping: 15,
+                    delay: index * 0.1,
                   }}
                 >
                   <span className={styles.roleNumber}>
