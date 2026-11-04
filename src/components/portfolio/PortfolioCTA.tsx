@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight, Sparkles, MessageSquare, CheckCircle2 } from "lucide-react";
 import Button from "@/components/ui/Button";
+import { ScrollTextHeading, ScrollTextFade } from "@/components/ui/ScrollText";
 
 function InteractiveFox() {
   const x = useMotionValue(0);
@@ -64,20 +65,32 @@ export default function PortfolioCTA() {
         />
 
         <div className="relative z-10 lg:col-span-7">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-xs font-semibold tracking-wide backdrop-blur-md">
+          <ScrollTextFade
+            as="div"
+            delay={0.05}
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-xs font-semibold tracking-wide backdrop-blur-md"
+          >
             <Sparkles className="h-3.5 w-3.5 text-violet" />
             <span>Ready for your production upgrade?</span>
-          </div>
+          </ScrollTextFade>
 
-          <h2 className="mt-5 text-3xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <ScrollTextHeading
+            as="h2"
+            delay={0.12}
+            className="mt-5 text-3xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl"
+          >
             Have a similar project?
-          </h2>
+          </ScrollTextHeading>
 
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
+          <ScrollTextFade
+            as="p"
+            delay={0.22}
+            className="mt-5 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg"
+          >
             Whether you need to architect a high-throughput SaaS platform, engineer a mobile
             fintech app, or transition legacy software to modern cloud infrastructure, our
             engineers will build it to scale.
-          </p>
+          </ScrollTextFade>
 
           {/* Value Highlights */}
           <div className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
@@ -86,16 +99,27 @@ export default function PortfolioCTA() {
               "Production deployment with automated CI/CD",
               "Sub-millisecond performance guarantees",
               "100% intellectual property ownership",
-            ].map((item) => (
-              <div key={item} className="flex items-center gap-2 text-sm text-white/90">
+            ].map((item, idx) => (
+              <motion.div
+                key={item}
+                initial={{ opacity: 0, x: -16, filter: "blur(4px)" }}
+                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.25 + idx * 0.08 }}
+                className="flex items-center gap-2 text-sm text-white/90"
+              >
                 <CheckCircle2 className="h-4 w-4 shrink-0 text-violet" />
                 <span>{item}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           {/* Action Buttons */}
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <ScrollTextFade
+            as="div"
+            delay={0.35}
+            className="mt-10 flex flex-wrap items-center gap-4"
+          >
             <Button href="/contact">
               Start your project
               <ArrowRight className="ml-1.5 h-4 w-4" />
@@ -107,7 +131,7 @@ export default function PortfolioCTA() {
               <MessageSquare className="h-4 w-4" />
               Book technical discovery call
             </Link>
-          </div>
+          </ScrollTextFade>
         </div>
 
         <div className="relative mt-12 lg:col-span-5 lg:mt-0">

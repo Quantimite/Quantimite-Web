@@ -26,6 +26,7 @@ import {
 import { GithubIcon } from "@/components/common/BrandIcons";
 import { ProjectCaseStudy } from "@/types/portfolio";
 import Button from "@/components/ui/Button";
+import { ScrollTextHeading, ScrollTextFade } from "@/components/ui/ScrollText";
 
 interface Props {
   project: ProjectCaseStudy;
@@ -58,26 +59,26 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
       <div className="mx-auto max-w-7xl px-6 pt-8 pb-4">
         <Link
           href="/portfolio"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-plum/70 transition hover:text-violet"
+          className="inline-flex items-center gap-2 text-xs font-bold text-plum/60 transition hover:text-violet"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to all project slots
+          <span>Back to All Project Slots</span>
         </Link>
       </div>
 
-      {/* Case Study Header Section */}
-      <section className="mx-auto max-w-7xl px-6 pt-4 pb-12">
-        <div className="flex flex-wrap items-center gap-2.5">
-          <span className="rounded-full bg-brand px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">
+      {/* Case Study Header */}
+      <header className="mx-auto max-w-7xl px-6 pt-4 pb-12">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="rounded-full bg-brand px-3.5 py-1 text-xs font-bold text-white shadow-xs">
             {project.category}
           </span>
-          <span className="rounded-full border border-plum/15 bg-white/80 px-3 py-1 text-xs font-semibold text-plum/70">
+          <span className="rounded-full border border-plum/15 bg-white/70 px-3 py-1 font-mono text-xs font-medium text-plum/70">
             {project.client}
           </span>
           {project.isPlaceholder && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-violet/10 px-3 py-1 text-xs font-bold text-violet">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-violet/20 bg-violet/10 px-3 py-1 text-xs font-bold text-violet">
               <Sparkles className="h-3 w-3" />
-              Reserved Project Slot
+              Reserved Showcase Slot
             </span>
           )}
         </div>
@@ -86,42 +87,32 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
           {project.title}
         </h1>
 
-        <p className="mt-4 max-w-3xl text-lg text-plum/70 sm:text-xl">
+        <p className="mt-4 max-w-3xl text-lg leading-relaxed text-plum/75 sm:text-xl">
           {project.tagline}
         </p>
 
-        {/* Metadata & Quick Links Strip */}
-        <div className="mt-8 grid grid-cols-2 gap-4 rounded-2xl border border-plum/10 bg-white/80 p-5 shadow-xs backdrop-blur-md sm:grid-cols-4 lg:p-6">
-          <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-violet/10 text-violet">
-              <Layers className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-medium text-plum/50">Concept / Role</p>
-              <p className="text-sm font-bold text-plum">{project.concept}</p>
-            </div>
+        {project.isPlaceholder && (
+          <div className="mt-6 rounded-2xl border border-dashed border-violet/30 bg-violet/[0.03] p-4 text-xs text-plum/70 sm:text-sm">
+            <strong className="text-violet font-bold">Notice:</strong> This is an architectural showcase slot reserved for upcoming production deployments. Below is the full technical layout specification.
           </div>
+        )}
+      </header>
 
-          <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-violet/10 text-violet">
-              <Calendar className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-medium text-plum/50">Year</p>
-              <p className="text-sm font-bold text-plum">{project.year}</p>
-            </div>
+      {/* Meta Specs Bar */}
+      <section className="mx-auto max-w-7xl px-6 pb-12">
+        <div className="glass-card grid grid-cols-2 gap-4 rounded-3xl p-6 sm:grid-cols-4 sm:p-8">
+          <div>
+            <p className="text-xs font-medium text-plum/50">Concept & Scope</p>
+            <p className="text-sm font-bold text-plum">{project.concept}</p>
           </div>
-
-          <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-violet/10 text-violet">
-              <Clock className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-medium text-plum/50">Engagement</p>
-              <p className="text-sm font-bold text-plum">{project.duration}</p>
-            </div>
+          <div>
+            <p className="text-xs font-medium text-plum/50">Year</p>
+            <p className="text-sm font-bold text-plum">{project.year}</p>
           </div>
-
+          <div>
+            <p className="text-xs font-medium text-plum/50">Engagement</p>
+            <p className="text-sm font-bold text-plum">{project.duration}</p>
+          </div>
           <div className="flex items-center justify-end gap-2.5">
             {project.githubUrl && (
               <a
@@ -156,7 +147,13 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
 
       {/* Hero Showcase Visual */}
       <section className="mx-auto max-w-7xl px-6 pb-16">
-        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border-2 border-dashed border-plum/20 bg-plum/5 shadow-xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.6 }}
+          className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border-2 border-dashed border-plum/20 bg-plum/5 shadow-xl"
+        >
           {project.coverImage ? (
             <Image
               src={project.coverImage}
@@ -179,23 +176,31 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
               </p>
             </div>
           )}
-        </div>
+        </motion.div>
       </section>
 
       {/* Deep-Dive Grid: Challenge & Solution */}
       <section className="mx-auto max-w-7xl px-6 pb-20">
         <div className="grid gap-10 lg:grid-cols-2">
           {/* Challenge */}
-          <div className="glass-card rounded-3xl p-8 sm:p-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.6 }}
+            className="glass-card rounded-3xl p-8 sm:p-10"
+          >
             <div className="flex items-center gap-3">
               <div className="grid h-10 w-10 place-items-center rounded-xl bg-red-500/10 text-red-500">
                 <AlertTriangle className="h-5 w-5" />
               </div>
-              <h2 className="text-2xl font-extrabold text-plum">The Challenge</h2>
+              <ScrollTextHeading as="h2" className="text-2xl font-extrabold text-plum">
+                The Challenge
+              </ScrollTextHeading>
             </div>
-            <p className="mt-4 text-base leading-relaxed text-plum/80">
+            <ScrollTextFade as="p" delay={0.1} className="mt-4 text-base leading-relaxed text-plum/80">
               {project.challenge.summary}
-            </p>
+            </ScrollTextFade>
             <ul className="mt-6 space-y-3">
               {project.challenge.points.map((pt, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm text-plum/70">
@@ -204,19 +209,27 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Solution */}
-          <div className="glass-card rounded-3xl p-8 sm:p-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="glass-card rounded-3xl p-8 sm:p-10"
+          >
             <div className="flex items-center gap-3">
               <div className="grid h-10 w-10 place-items-center rounded-xl bg-violet/10 text-violet">
                 <Lightbulb className="h-5 w-5" />
               </div>
-              <h2 className="text-2xl font-extrabold text-plum">The Solution</h2>
+              <ScrollTextHeading as="h2" className="text-2xl font-extrabold text-plum">
+                The Solution
+              </ScrollTextHeading>
             </div>
-            <p className="mt-4 text-base leading-relaxed text-plum/80">
+            <ScrollTextFade as="p" delay={0.1} className="mt-4 text-base leading-relaxed text-plum/80">
               {project.solution.summary}
-            </p>
+            </ScrollTextFade>
             <ul className="mt-6 space-y-3">
               {project.solution.points.map((pt, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm text-plum/80">
@@ -240,19 +253,25 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
                 </div>
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Tech Used Section */}
       <section className="mx-auto max-w-7xl px-6 pb-20">
-        <div className="rounded-3xl border border-plum/10 bg-white/80 p-8 shadow-xs backdrop-blur-md sm:p-10">
-          <h2 className="text-xl font-extrabold text-plum sm:text-2xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30, filter: "blur(4px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.6 }}
+          className="rounded-3xl border border-plum/10 bg-white/80 p-8 shadow-xs backdrop-blur-md sm:p-10"
+        >
+          <ScrollTextHeading as="h2" className="text-xl font-extrabold text-plum sm:text-2xl">
             Technologies & Frameworks Utilized
-          </h2>
-          <p className="mt-1 text-sm text-plum/60">
+          </ScrollTextHeading>
+          <ScrollTextFade as="p" delay={0.1} className="mt-1 text-sm text-plum/60">
             Planned technologies configured for this project slot.
-          </p>
+          </ScrollTextFade>
 
           <div className="mt-6 flex flex-wrap gap-2.5">
             {project.techUsed.map((tech) => (
@@ -268,12 +287,18 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Results & Business Impact */}
       <section className="mx-auto max-w-7xl px-6 pb-20">
-        <div className="overflow-hidden rounded-[2.5rem] bg-plum p-8 text-white shadow-xl sm:p-12 lg:p-16">
+        <motion.div
+          initial={{ opacity: 0, y: 35, filter: "blur(4px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.6 }}
+          className="overflow-hidden rounded-[2.5rem] bg-plum p-8 text-white shadow-xl sm:p-12 lg:p-16"
+        >
           <div className="flex items-center gap-3">
             <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 text-violet">
               <TrendingUp className="h-5 w-5" />
@@ -283,12 +308,12 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
             </span>
           </div>
 
-          <h2 className="mt-3 text-2xl font-black text-white sm:text-4xl">
+          <ScrollTextHeading as="h2" className="mt-3 text-2xl font-black text-white sm:text-4xl">
             Target Metrics & Production Benchmarks
-          </h2>
-          <p className="mt-3 max-w-2xl text-base text-white/75">
+          </ScrollTextHeading>
+          <ScrollTextFade as="p" delay={0.1} className="mt-3 max-w-2xl text-base text-white/75">
             {project.results.summary}
-          </p>
+          </ScrollTextFade>
 
           {/* Hard Metrics Grid */}
           <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
@@ -311,19 +336,19 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Screenshots & Interactive Gallery Space */}
       <section className="mx-auto max-w-7xl px-6 pb-20">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-violet">
+            <ScrollTextFade as="span" className="text-xs font-bold uppercase tracking-wider text-violet block">
               Visual Highlights
-            </span>
-            <h2 className="mt-1 text-2xl font-extrabold text-plum sm:text-3xl">
+            </ScrollTextFade>
+            <ScrollTextHeading as="h2" delay={0.1} className="mt-1 text-2xl font-extrabold text-plum sm:text-3xl">
               Screenshots & Architecture Previews
-            </h2>
+            </ScrollTextHeading>
           </div>
         </div>
 
@@ -437,9 +462,9 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
       {relatedProjects.length > 0 && (
         <section className="mx-auto max-w-7xl px-6 pt-10">
           <div className="border-t border-plum/10 pt-12">
-            <h2 className="text-2xl font-extrabold text-plum">
+            <ScrollTextHeading as="h2" className="text-2xl font-extrabold text-plum">
               Other Reserved Project Slots
-            </h2>
+            </ScrollTextHeading>
             <div className="mt-6 grid gap-6 sm:grid-cols-2">
               {relatedProjects.map((rel) => (
                 <Link
@@ -466,13 +491,19 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
 
       {/* Bottom CTA */}
       <section className="mx-auto mt-20 max-w-7xl px-6 text-center">
-        <div className="rounded-3xl border border-plum/10 bg-white/80 p-8 shadow-xs backdrop-blur-md sm:p-12">
-          <h2 className="text-2xl font-extrabold text-plum sm:text-3xl">
+        <motion.div
+          initial={{ opacity: 0, y: 35, filter: "blur(4px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.6 }}
+          className="rounded-3xl border border-plum/10 bg-white/80 p-8 shadow-xs backdrop-blur-md sm:p-12"
+        >
+          <ScrollTextHeading as="h2" className="text-2xl font-extrabold text-plum sm:text-3xl">
             Have a project to deploy with us?
-          </h2>
-          <p className="mx-auto mt-2 max-w-xl text-sm text-plum/70 sm:text-base">
+          </ScrollTextHeading>
+          <ScrollTextFade as="p" delay={0.1} className="mx-auto mt-2 max-w-xl text-sm text-plum/70 sm:text-base">
             Let&apos;s build your system and feature your success story right here in our production portfolio.
-          </p>
+          </ScrollTextFade>
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <Button href="/contact">Schedule Technical Discovery</Button>
             <Link
@@ -482,7 +513,7 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
               Browse all project slots
             </Link>
           </div>
-        </div>
+        </motion.div>
       </section>
     </article>
   );
