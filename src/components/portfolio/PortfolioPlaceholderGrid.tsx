@@ -17,6 +17,7 @@ import {
 import Button from "@/components/ui/Button";
 import { ProjectCaseStudy, ProjectCategory } from "@/types/portfolio";
 import { PROJECT_CATEGORIES } from "@/lib/portfolio-data";
+import { ScrollTextHeading, ScrollTextFade } from "@/components/ui/ScrollText";
 
 interface Props {
   projects: ProjectCaseStudy[];
@@ -49,17 +50,31 @@ export default function PortfolioPlaceholderGrid({ projects }: Props) {
       {/* Header with Title and Search Controls */}
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-violet">
+          <ScrollTextFade
+            as="div"
+            delay={0.05}
+            className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-violet"
+          >
             <Clock className="h-3.5 w-3.5" />
             <span>Active Deliverables & Upcoming Releases</span>
-          </div>
-          <h2 className="mt-2 text-3xl font-black tracking-tight text-plum sm:text-4xl lg:text-5xl">
+          </ScrollTextFade>
+
+          <ScrollTextHeading
+            as="h2"
+            delay={0.1}
+            className="mt-2 text-3xl font-black tracking-tight text-plum sm:text-4xl lg:text-5xl"
+          >
             Project Showcase & Reserved Slots
-          </h2>
-          <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-plum/70 sm:text-base">
+          </ScrollTextHeading>
+
+          <ScrollTextFade
+            as="p"
+            delay={0.2}
+            className="mt-2.5 max-w-2xl text-sm leading-relaxed text-plum/70 sm:text-base"
+          >
             Our latest production case studies are currently in deployment or under confidentiality
             review. Below are reserved showcase slots prepared for upcoming technical reveals.
-          </p>
+          </ScrollTextFade>
         </div>
 
         {/* Live Search Input */}
@@ -132,10 +147,11 @@ export default function PortfolioPlaceholderGrid({ projects }: Props) {
             <motion.article
               layout
               key={project.slug}
-              initial={{ opacity: 0, y: 30, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
+              initial={{ opacity: 0, y: 35, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false, amount: 0.15 }}
               exit={{ opacity: 0, scale: 0.92 }}
-              transition={{ duration: 0.45, delay: idx * 0.05 }}
+              transition={{ duration: 0.5, delay: (idx % 3) * 0.08 }}
               className="group relative flex flex-col overflow-hidden rounded-3xl border-2 border-dashed border-plum/15 bg-white/70 p-6 backdrop-blur-md transition-all duration-300 hover:border-violet/50 hover:bg-white/95 hover:shadow-xl hover:shadow-violet/10 sm:p-7"
             >
               {/* Media Space Placeholder Box */}
@@ -241,16 +257,23 @@ export default function PortfolioPlaceholderGrid({ projects }: Props) {
               <PlusCircle className="h-6 w-6" />
             </div>
             <div>
-              <h3 className="text-xl font-extrabold text-plum">
+              <ScrollTextHeading
+                as="h3"
+                className="text-xl font-extrabold text-plum"
+              >
                 Have a new project ready to add?
-              </h3>
-              <p className="mt-1 max-w-xl text-sm leading-relaxed text-plum/70">
+              </ScrollTextHeading>
+              <ScrollTextFade
+                as="p"
+                delay={0.1}
+                className="mt-1 max-w-xl text-sm leading-relaxed text-plum/70"
+              >
                 You can add real projects anytime by populating{" "}
                 <code className="rounded-md bg-mist px-2 py-0.5 font-mono text-xs font-bold text-plum">
                   src/lib/portfolio-data.ts
                 </code>
                 . Each slot automatically inherits rich galleries, metrics, and live demo links.
-              </p>
+              </ScrollTextFade>
             </div>
           </div>
 
