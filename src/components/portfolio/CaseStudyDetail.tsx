@@ -20,6 +20,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  FileCode2,
+  Sparkles,
 } from "lucide-react";
 import { GithubIcon } from "@/components/common/BrandIcons";
 import { ProjectCaseStudy } from "@/types/portfolio";
@@ -37,14 +39,14 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
   const closeLightbox = () => setActiveImageIndex(null);
 
   const prevImage = () => {
-    if (activeImageIndex === null) return;
+    if (activeImageIndex === null || !project.gallery?.length) return;
     setActiveImageIndex(
       activeImageIndex === 0 ? project.gallery.length - 1 : activeImageIndex - 1
     );
   };
 
   const nextImage = () => {
-    if (activeImageIndex === null) return;
+    if (activeImageIndex === null || !project.gallery?.length) return;
     setActiveImageIndex(
       activeImageIndex === project.gallery.length - 1 ? 0 : activeImageIndex + 1
     );
@@ -59,7 +61,7 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
           className="inline-flex items-center gap-2 text-sm font-semibold text-plum/70 transition hover:text-violet"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to all case studies
+          Back to all project slots
         </Link>
       </div>
 
@@ -72,6 +74,12 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
           <span className="rounded-full border border-plum/15 bg-white/80 px-3 py-1 text-xs font-semibold text-plum/70">
             {project.client}
           </span>
+          {project.isPlaceholder && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-violet/10 px-3 py-1 text-xs font-bold text-violet">
+              <Sparkles className="h-3 w-3" />
+              Reserved Project Slot
+            </span>
+          )}
         </div>
 
         <h1 className="mt-4 text-3xl font-black tracking-tight text-plum sm:text-5xl lg:text-6xl">
@@ -137,21 +145,40 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
                 <span>Live Demo</span>
               </a>
             )}
+            {!project.githubUrl && !project.liveDemoUrl && (
+              <span className="rounded-full bg-plum/5 px-3 py-1.5 text-xs font-semibold text-plum/50">
+                In Production
+              </span>
+            )}
           </div>
         </div>
       </section>
 
       {/* Hero Showcase Visual */}
       <section className="mx-auto max-w-7xl px-6 pb-16">
-        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-plum/10 bg-plum/5 shadow-2xl">
-          <Image
-            src={project.coverImage}
-            alt={project.title}
-            fill
-            priority
-            sizes="(min-width: 1280px) 1200px, 95vw"
-            className="object-cover"
-          />
+        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border-2 border-dashed border-plum/20 bg-plum/5 shadow-xl">
+          {project.coverImage ? (
+            <Image
+              src={project.coverImage}
+              alt={project.title}
+              fill
+              priority
+              sizes="(min-width: 1280px) 1200px, 95vw"
+              className="object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
+              <div className="grid h-16 w-16 place-items-center rounded-2xl bg-brand text-white shadow-lg">
+                <FileCode2 className="h-8 w-8" />
+              </div>
+              <h3 className="mt-4 text-lg font-bold text-plum">
+                [ High-Resolution Showcase Visual Space ]
+              </h3>
+              <p className="mt-1 max-w-md text-xs text-plum/60">
+                This space will display product screens, live interface captures, or architecture diagrams upon release.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -224,7 +251,7 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
             Technologies & Frameworks Utilized
           </h2>
           <p className="mt-1 text-sm text-plum/60">
-            Engineered with modern, battle-tested tools selected for long-term maintainability and throughput.
+            Planned technologies configured for this project slot.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-2.5">
@@ -257,7 +284,7 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
           </div>
 
           <h2 className="mt-3 text-2xl font-black text-white sm:text-4xl">
-            Results that speak for themselves
+            Target Metrics & Production Benchmarks
           </h2>
           <p className="mt-3 max-w-2xl text-base text-white/75">
             {project.results.summary}
@@ -284,34 +311,10 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
               </div>
             ))}
           </div>
-
-          {/* Testimonial Quote */}
-          {project.results.testimonial && (
-            <div className="relative mt-12 border-t border-white/10 pt-8">
-              <Quote className="h-8 w-8 text-violet/40" />
-              <blockquote className="mt-3 text-lg font-medium italic text-white/90 sm:text-xl">
-                &ldquo;{project.results.testimonial.quote}&rdquo;
-              </blockquote>
-              <div className="mt-4 flex items-center gap-3">
-                <div className="grid h-10 w-10 place-items-center rounded-full bg-violet font-bold text-white">
-                  {project.results.testimonial.author[0]}
-                </div>
-                <div>
-                  <div className="font-bold text-white">
-                    {project.results.testimonial.author}
-                  </div>
-                  <div className="text-xs text-white/60">
-                    {project.results.testimonial.role} &middot;{" "}
-                    {project.results.testimonial.company}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
-      {/* Screenshots & Interactive Gallery */}
+      {/* Screenshots & Interactive Gallery Space */}
       <section className="mx-auto max-w-7xl px-6 pb-20">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -322,46 +325,55 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
               Screenshots & Architecture Previews
             </h2>
           </div>
-          <p className="text-xs text-plum/60 sm:text-sm">
-            Click any screenshot to inspect full resolution.
-          </p>
         </div>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {project.gallery.map((item, index) => (
-            <div
-              key={index}
-              onClick={() => openLightbox(index)}
-              className="glass-card group cursor-pointer overflow-hidden rounded-2xl"
-            >
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-plum/5">
-                <Image
-                  src={item.url}
-                  alt={item.title}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, 50vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-plum/40 opacity-0 transition-opacity group-hover:opacity-100">
-                  <div className="grid h-10 w-10 place-items-center rounded-full bg-white text-plum shadow-lg">
-                    <Maximize2 className="h-5 w-5" />
+        {project.gallery && project.gallery.length > 0 ? (
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {project.gallery.map((item, index) => (
+              <div
+                key={index}
+                onClick={() => openLightbox(index)}
+                className="glass-card group cursor-pointer overflow-hidden rounded-2xl"
+              >
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-plum/5">
+                  <Image
+                    src={item.url}
+                    alt={item.title}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, 50vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-plum/40 opacity-0 transition-opacity group-hover:opacity-100">
+                    <div className="grid h-10 w-10 place-items-center rounded-full bg-white text-plum shadow-lg">
+                      <Maximize2 className="h-5 w-5" />
+                    </div>
                   </div>
                 </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-plum">{item.title}</h3>
+                  <p className="mt-1 line-clamp-2 text-xs text-plum/65">
+                    {item.caption}
+                  </p>
+                </div>
               </div>
-              <div className="p-4">
-                <h3 className="font-bold text-plum">{item.title}</h3>
-                <p className="mt-1 line-clamp-2 text-xs text-plum/65">
-                  {item.caption}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-8 rounded-3xl border-2 border-dashed border-plum/15 bg-white/70 p-10 text-center">
+            <FileCode2 className="mx-auto h-10 w-10 text-plum/30" />
+            <h3 className="mt-3 text-lg font-bold text-plum">
+              [ Image Gallery Reserved Space ]
+            </h3>
+            <p className="mt-1 text-xs text-plum/60">
+              Interactive high-resolution screenshot galleries and modal previews will populate here automatically.
+            </p>
+          </div>
+        )}
       </section>
 
-      {/* Lightbox Modal */}
+      {/* Lightbox Modal (if gallery present) */}
       <AnimatePresence>
-        {activeImageIndex !== null && (
+        {activeImageIndex !== null && project.gallery && project.gallery[activeImageIndex] && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -421,28 +433,20 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
         )}
       </AnimatePresence>
 
-      {/* Related Projects */}
+      {/* Related Project Slots */}
       {relatedProjects.length > 0 && (
         <section className="mx-auto max-w-7xl px-6 pt-10">
           <div className="border-t border-plum/10 pt-12">
             <h2 className="text-2xl font-extrabold text-plum">
-              Explore More Case Studies
+              Other Reserved Project Slots
             </h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-2">
               {relatedProjects.map((rel) => (
                 <Link
                   key={rel.slug}
                   href={`/portfolio/${rel.slug}`}
-                  className="glass-card group flex items-center gap-4 rounded-2xl p-4"
+                  className="group flex items-center justify-between rounded-2xl border-2 border-dashed border-plum/15 bg-white/70 p-5 transition hover:border-violet/40 hover:bg-white"
                 >
-                  <div className="relative h-20 w-24 shrink-0 overflow-hidden rounded-xl bg-plum/5">
-                    <Image
-                      src={rel.coverImage}
-                      alt={rel.title}
-                      fill
-                      className="object-cover transition-transform group-hover:scale-105"
-                    />
-                  </div>
                   <div>
                     <span className="text-xs font-semibold text-violet">
                       {rel.category}
@@ -450,9 +454,9 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
                     <h3 className="font-bold text-plum transition group-hover:text-violet">
                       {rel.title}
                     </h3>
-                    <p className="text-xs text-plum/60">{rel.client}</p>
+                    <p className="text-xs text-plum/60">{rel.duration}</p>
                   </div>
-                  <ArrowRight className="ml-auto h-5 w-5 text-plum/30 transition group-hover:translate-x-1 group-hover:text-violet" />
+                  <ArrowRight className="h-5 w-5 text-plum/30 transition group-hover:translate-x-1 group-hover:text-violet" />
                 </Link>
               ))}
             </div>
@@ -464,10 +468,10 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
       <section className="mx-auto mt-20 max-w-7xl px-6 text-center">
         <div className="rounded-3xl border border-plum/10 bg-white/80 p-8 shadow-xs backdrop-blur-md sm:p-12">
           <h2 className="text-2xl font-extrabold text-plum sm:text-3xl">
-            Have a project similar to {project.title}?
+            Have a project to deploy with us?
           </h2>
           <p className="mx-auto mt-2 max-w-xl text-sm text-plum/70 sm:text-base">
-            Let&apos;s evaluate your architectural goals and construct a tailored delivery roadmap.
+            Let&apos;s build your system and feature your success story right here in our production portfolio.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <Button href="/contact">Schedule Technical Discovery</Button>
@@ -475,7 +479,7 @@ export default function CaseStudyDetail({ project, relatedProjects }: Props) {
               href="/portfolio"
               className="btn-outline inline-flex items-center rounded-full px-6 py-3.5 text-sm font-semibold text-plum"
             >
-              Browse all projects
+              Browse all project slots
             </Link>
           </div>
         </div>

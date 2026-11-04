@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import PortfolioHero from "@/components/portfolio/PortfolioHero";
-import PortfolioGrid from "@/components/portfolio/PortfolioGrid";
+import PortfolioHeroCarousel from "@/components/portfolio/PortfolioHeroCarousel";
+import PortfolioPlaceholderGrid from "@/components/portfolio/PortfolioPlaceholderGrid";
 import PortfolioCTA from "@/components/portfolio/PortfolioCTA";
 import { getAllProjects } from "@/lib/portfolio-data";
 
 export const metadata: Metadata = {
-  title: "Portfolio & Case Studies | Quantimite — Engineering at Scale",
+  title: "Portfolio & Project Showcase | Quantimite — Engineering at Scale",
   description:
-    "Explore Quantimite's verified portfolio and engineering case studies across Web, Mobile, SaaS, Design Systems, and Digital Growth.",
+    "Explore Quantimite's engineering showcase, upcoming project slots, and technical capabilities across Web, Mobile, SaaS, Design Systems, and Digital Growth.",
   keywords: [
     "Quantimite Portfolio",
-    "Engineering Case Studies",
+    "Engineering Showcase",
     "SaaS Architecture",
     "Mobile App Development",
     "Design Systems",
@@ -18,9 +18,9 @@ export const metadata: Metadata = {
     "Next.js Development",
   ],
   openGraph: {
-    title: "Portfolio & Case Studies | Quantimite",
+    title: "Portfolio & Project Showcase | Quantimite",
     description:
-      "Explore Quantimite's verified portfolio and engineering case studies across Web, Mobile, SaaS, Design Systems, and Digital Growth.",
+      "Explore Quantimite's engineering showcase, upcoming project slots, and technical capabilities across Web, Mobile, SaaS, Design Systems, and Digital Growth.",
     url: "https://quantimite.com/portfolio",
     siteName: "Quantimite",
     type: "website",
@@ -32,11 +32,11 @@ export default function PortfolioPage() {
 
   return (
     <div className="bg-[#fbfaff]">
-      {/* Hero with background video and scroll animation */}
-      <PortfolioHero />
+      {/* Hero Carousel with generated videos and crossfade transitions */}
+      <PortfolioHeroCarousel />
 
-      {/* Interactive Project Grid with Filters (Web, Mobile, SaaS, Design, Marketing) & Search */}
-      <PortfolioGrid projects={projects} />
+      {/* Project Grid with wireframe placeholder boxes, blank spaces for later addition, filters & search */}
+      <PortfolioPlaceholderGrid projects={projects} />
 
       {/* CTA: Have a similar project? */}
       <PortfolioCTA />

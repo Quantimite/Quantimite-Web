@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${project.title} | Quantimite Case Study`,
       description: project.tagline,
-      images: [{ url: project.coverImage }],
+      images: project.coverImage ? [{ url: project.coverImage }] : [],
     },
   };
 }

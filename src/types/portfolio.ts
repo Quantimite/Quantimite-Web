@@ -22,8 +22,9 @@ export interface ProjectCaseStudy {
   year: string;
   duration: string;
   featured?: boolean;
-  coverImage: string;
+  coverImage?: string;
   heroVideo?: string;
+  isPlaceholder?: boolean;
   overview: string;
   challenge: {
     summary: string;
