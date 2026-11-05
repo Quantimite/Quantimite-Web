@@ -57,9 +57,11 @@ export default function InsightsPage() {
       <BlogHero />
 
       {/* Featured Insight Post with Real-World Object Imagery */}
-      <div id="featured">
-        <FeaturedArticle post={featuredPost} />
-      </div>
+      {featuredPost && (
+        <div id="featured">
+          <FeaturedArticle post={featuredPost} />
+        </div>
+      )}
 
       {/* Filterable Article List (Categories, Live Search, Tags, Real-World Object Artwork Cards) */}
       <div id="articles">
