@@ -5,17 +5,18 @@ export type Role = "super_admin" | "sales" | "hr" | "content";
 export const MODULES = [
   { slug: "overview", group: "Overview", label: "Dashboard", roles: ["sales", "hr", "content"], desc: "Traffic, leads, hiring, and chatbot analytics." },
   { slug: "crm", group: "Sales & growth", label: "CRM & Inquiries", roles: ["sales"], table: "leads", desc: "Inbound project briefs, budgets, timelines, and consultation bookings." },
-  { slug: "seo-audits", group: "Sales & growth", label: "SEO Audit Desk", roles: ["sales"], table: "leads", desc: "Requests from the SEO Health Audit tool, with domain and contact data." },
+  { slug: "seo", group: "Sales & growth", label: "SEO Audit Desk", roles: ["sales"], table: "leads", desc: "Requests from the SEO Health Audit tool, with domain and contact data." },
   { slug: "partnerships", group: "Sales & growth", label: "Partnerships", roles: ["sales"], table: "leads", desc: "Social collaboration pitches: Pending, Approved, Active, Declined." },
-  { slug: "chat-logs", group: "Sales & growth", label: "Chatbot Logs", roles: ["sales"], table: "chat_logs", desc: "Searchable history of chat sessions, prompts, replies, and timestamps." },
-  { slug: "careers", group: "Recruitment", label: "Job Postings", roles: ["hr"], table: "posts", desc: "Create, edit, and close open positions." },
-  { slug: "ats", group: "Recruitment", label: "Applicant Tracking", roles: ["hr"], table: "applications", desc: "New, Reviewed, Interview, Hired, Rejected, with PDF/DOCX resume views." },
+  { slug: "chatbot", group: "Sales & growth", label: "Chatbot Logs", roles: ["sales"], table: "chat_logs", desc: "Searchable history of chat sessions, prompts, replies, and timestamps." },
+  { slug: "jobs", group: "Recruitment", label: "Job Postings", roles: ["hr"], table: "posts", desc: "Create, edit, and close open positions." },
+  { slug: "applicants", group: "Recruitment", label: "Applicant Tracking", roles: ["hr"], table: "applications", desc: "New, Reviewed, Interview, Hired, Rejected, with PDF/DOCX resume views." },
   { slug: "blog", group: "Content", label: "Blog & Insights", roles: ["content"], table: "posts", desc: "Rich-text publishing with SEO metadata and categories." },
   { slug: "portfolio", group: "Content", label: "Portfolio", roles: ["content"], table: "portfolio_items", desc: "Projects, filter tags, challenge and solution write-ups, galleries." },
   { slug: "research", group: "Content", label: "Research Hub", roles: ["content"], table: "posts", desc: "Whitepaper uploads, R&D prototypes, and GitHub links." },
   { slug: "users", group: "System", label: "Admin Users", roles: [], table: "system_admins", desc: "Create sub-admins, assign roles, and revoke access (Super Admin only)." },
   { slug: "settings", group: "System", label: "Settings", roles: [], desc: "System settings (Super Admin only)." },
 ] as const;
+
 export const ROLE_LABEL: Record<Role, string> = { super_admin: "Super Admin", sales: "Sales / Growth Lead", hr: "HR / Recruitment Lead", content: "Content Manager" };
 export const modulesFor = (role: Role) => MODULES.filter((m) => role === "super_admin" || (m.roles as readonly string[]).includes(role));
 

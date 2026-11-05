@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LogOut, Menu, X } from "lucide-react";
+import { FileText, LogOut, Menu, X } from "lucide-react";
 import Logo from "@/components/layout/Logo";
 import { logout } from "@/app/app-secure-portal-9f8b2c/actions";
 import { ICONS } from "./icons";
@@ -31,7 +31,7 @@ export default function Sidebar({ slug, items, user, role }: { slug: string; ite
             <p className="px-3 pb-2 text-xs font-semibold text-white/40">{g}</p>
             <ul className="space-y-1">
               {list.map((m) => {
-                const Icon = ICONS[m.slug], active = path === href(m.slug);
+                const Icon = ICONS[m.slug] || FileText, active = path === href(m.slug);
                 return (
                   <li key={m.slug}>
                     <Link href={href(m.slug)} aria-current={active ? "page" : undefined}
